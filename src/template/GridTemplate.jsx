@@ -46,8 +46,8 @@ const GridTemplate = ({ children, pageType }) => (
   <UserPageTemplate pageType={pageType}>
     <StyledWrapper>
       <StyledPageHeader>
-        <Input search placeholder="Search" />
-        <StyledHeading big as="h1">
+        <Input $search placeholder="Search" />
+        <StyledHeading $big as="h1">
           {pageType}
         </StyledHeading>
         <StyledParagraph>6 {pageType}</StyledParagraph>

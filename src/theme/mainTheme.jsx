@@ -16,7 +16,7 @@ export const theme = {
     l: "2.4rem",
     xl: "4rem",
   },
-  note: "hsl(49, 100%, 58%)",
-  twitter: "hsl(196, 83%, 75%)", 
-  article: "hsl(106, 47%, 64%)",
+  notes: "hsl(49, 100%, 58%)",
+  twitters: "hsl(196, 83%, 75%)",
+  articles: "hsl(106, 47%, 64%)",
 };

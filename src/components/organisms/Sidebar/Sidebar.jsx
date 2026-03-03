@@ -10,7 +10,6 @@ import penIcon from '@/assets/icons/pen.svg';
 import twitterIcon from '@/assets/icons/twitter.svg';
 import logoIcon from '../../../assets/icons/logo.svg?url';
 
-
 const StyledWrapper = styled.nav`
   position: fixed;
   left: 0;
@@ -36,7 +35,6 @@ const StyledLogoLink = styled(NavLink)`
   background-size: 80%;
   border: none;
   margin-bottom: 10vh;
-
 `;
 
 const StyledLinksList = styled.ul`
@@ -53,18 +51,16 @@ const Sidebar = ({ pageType }) => {
   const location = useLocation();
 
   const links = [
-    { to: '/', icon: penIcon },
+    { to: '/notes', icon: penIcon },
     { to: '/twitters', icon: twitterIcon },
     { to: '/articles', icon: bulbIcon },
   ];
 
   return (
     <StyledWrapper $activeColor={pageType}>
-
       <StyledLogoLink to="/">
         <img src={logoIcon} alt="Logo" />
       </StyledLogoLink>
-
 
       <StyledLinksList>
         {links.map(({ to, icon }) => (
@@ -79,12 +75,11 @@ const Sidebar = ({ pageType }) => {
         ))}
       </StyledLinksList>
 
-
       <ButtonIcon
         as={NavLink}
         to="/login"
         icon={logoutIcon}
-        style={{ marginTop: "auto" }}
+        style={{ marginTop: 'auto' }}
       />
     </StyledWrapper>
   );

@@ -22,15 +22,11 @@ const StyledPageHeader = styled.div`
 `;
 
 const StyledHeading = styled(Heading)`
-  margin: 25px 0 0 0;
-
-  ::first-letter {
-    text-transform: uppercase;
-  }
+  margin: 25px 0 10px 0;
+  display: block;
 `;
 
 const StyledParagraph = styled(Paragraph)`
-  margin: 0;
   font-weight: ${({ theme }) => theme.bold};
 `;
 
@@ -40,7 +36,7 @@ const StyledLink = styled.a`
   font-size: ${({ theme }) => theme.fontSize.xs};
   color: black;
   text-transform: uppercase;
-  margin: 20px 0 50px;
+  margin: 20px 0 100px;
 `;
 
 const StyledImage = styled.img`
@@ -52,23 +48,65 @@ const StyledImage = styled.img`
   border-radius: 50%;
 `;
 
-const DetailsTemplate = ({ pageType, title, created, content, articleUrl, twitterName }) => (
+const ButtonWrapper = styled.div`
+  margin-top: 30px;
+`;
+
+const StyledLinkButton = styled(Button)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: ${({ theme }) => theme.black};
+  text-decoration: none;
+  line-height: 47px;
+  margin-bottom: 10px;
+`;
+
+
+
+
+const DetailsTemplate = ({
+  pageType,
+  title,
+  created,
+  content,
+  articleUrl,
+  twitterName,
+}) => (
   <UserPageTemplate pageType={pageType}>
     <StyledWrapper>
       <StyledPageHeader>
-        <StyledHeading big as="h1">
+        <StyledHeading $big as="h1">
           {title}
         </StyledHeading>
-        <StyledParagraph>{created}</StyledParagraph>
+        <StyledParagraph>CREATED - {created} ago</StyledParagraph>
       </StyledPageHeader>
       <Paragraph>{content}</Paragraph>
-      {pageType === 'articles' && <StyledLink href={articleUrl}>Open article</StyledLink>}
-      {pageType === 'twitters' && (
-        <StyledImage alt={title} src={`https://avatars.io/twitter/${twitterName}`} />
+
+      {pageType === 'articles' && (
+        <StyledLink href={articleUrl} target="_blank" rel="noopener noreferrer">
+          Open this article
+        </StyledLink>
       )}
-      <Button as={Link} to={`/${pageType}`} activeColor={pageType}>
-        save / close
-      </Button>
+
+      {pageType === 'twitters' && (
+        <StyledLink href={`https://x.com/${twitterName}`} target="_blank">
+          OPEN THIS X (TWITTER)
+        </StyledLink>
+      )}
+
+      {pageType === 'twitters' && (
+        <StyledImage alt={title} src={`https://unavatar.io/x/${twitterName}`} />
+      )}
+
+      <ButtonWrapper>
+        <StyledLinkButton as={Link} to={`/${pageType}`} activeColor={pageType}>
+          SAVE / CLOSE
+        </StyledLinkButton>
+
+        <Button $subtle>REMOVE ITEM</Button>
+      </ButtonWrapper>
     </StyledWrapper>
   </UserPageTemplate>
 );

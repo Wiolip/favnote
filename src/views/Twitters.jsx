@@ -5,11 +5,11 @@ import Card from '@/components/molecules/Card/Card';
 const twitters = [
   {
     id: 1,
-    title: 'Hello Roman',
+    title: 'React_app',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
     created: '1 day',
-    twitterName: 'hello_roman',
+    twitterName: 'jordwalke',
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ const twitters = [
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
     created: '1 day',
-    twitterName: 'dan_abramov',
+    twitterName: 'reactjs',
   },
   {
     id: 3,
@@ -25,15 +25,15 @@ const twitters = [
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
     created: '5 days',
-    twitterName: 'mjackson',
+    twitterName: 'dan_abramov',
   },
   {
     id: 4,
-    title: 'Super animacje!',
+    title: 'react world',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
     created: '10 days',
-    twitterName: 'sarah_edo',
+    twitterName: 'leeeroob',
   },
 ];
 
