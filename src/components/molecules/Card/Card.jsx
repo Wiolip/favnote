@@ -1,6 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
+import WithContext from '@/hoc/WithContext';
+import { useDispatch } from 'react-redux';
+
+import { removeItem as removeNote } from '@/reducer/notesReducer';
+import { removeItem as removeTwitter } from '@/reducer/twittersReducer';
+import { removeItem as removeArticle } from '@/reducer/articlesReducer';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
@@ -29,7 +35,7 @@ const InnerWrapper = styled('div').withConfig({
     activeColor ? theme[activeColor] : 'white'};
 
   :first-of-type {
-    z-index: 9999;
+    z-index: 9;
   }
 
   ${({ flex }) =>
@@ -39,18 +45,14 @@ const InnerWrapper = styled('div').withConfig({
       flex-direction: column;
       justify-content: space-between;
     `}
-
-  ${({ content }) =>
-    content &&
-    css`
-      display: flex;
-      flex-direction: column;
-      padding: 0;
-
-    `}
 `;
 
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0;
 
+`;
 
 const DateInfo = styled(Paragraph)`
   margin: 0 0 5px;
@@ -92,7 +94,7 @@ const StyledLinkWrapper = styled.a`
   justify-content: center;
   align-items: center;
   pointer-events: auto;
-  z-index: 1000;
+  z-index: 10;
 `;
 
 const StyledLinkIcon = styled.img`
@@ -114,28 +116,36 @@ const StyledLink = styled(Link)`
 
 const Card = ({
   id,
-  cardType,
+  pageContext,
   title,
   created,
   content,
   twitterName,
   articleUrl,
 }) => {
-  const [redirect, setRedirect] = useState(false);
+ const [redirect, setRedirect] = useState(false);
+ const dispatch = useDispatch();
 
-  const handleCardClick = () => setRedirect(true);
+ const handleCardClick = () => setRedirect(true);
 
-  if (redirect) {
-    return <Navigate to={`/${cardType}/details/${id}`} />;
-  }
+
+ const handleRemove = (e) => {
+   e.stopPropagation();
+
+   if (pageContext === 'notes') dispatch(removeNote({ id }));
+   if (pageContext === 'twitters') dispatch(removeTwitter({ id }));
+   if (pageContext === 'articles') dispatch(removeArticle({ id }));
+ };
+
+ if (redirect) return <Navigate to={`/${pageContext}/details/${id}`} />;
 
   return (
     <StyledWrapper onClick={handleCardClick}>
-      <InnerWrapper activeColor={cardType}>
+      <InnerWrapper activeColor={pageContext}>
         <StyledHeading>{title}</StyledHeading>
         <DateInfo>{created}</DateInfo>
 
-        {cardType === 'twitters' && twitterName && (
+        {pageContext === 'twitters' && twitterName && (
           <StyledAvatarWrapper>
             <StyledAvatar
               src={`https://i.pravatar.cc/300/${twitterName}`}
@@ -144,7 +154,7 @@ const Card = ({
           </StyledAvatarWrapper>
         )}
 
-        {cardType === 'articles' && articleUrl && (
+        {pageContext === 'articles' && articleUrl && (
           <StyledLinkWrapper
             href={articleUrl}
             target="_blank"
@@ -157,14 +167,14 @@ const Card = ({
       </InnerWrapper>
 
       <InnerWrapper flex>
-        <InnerWrapper content>
+        <ContentWrapper>
           <Paragraph>{content}</Paragraph>
-          <StyledLink as={Link} to={`/${cardType}/details/${id}`}>
+          <StyledLink as={Link} to={`/${pageContext}/details/${id}`}>
             read more
           </StyledLink>
-        </InnerWrapper>
+        </ContentWrapper>
 
-        <Button $secondary onClick={(e) => e.stopPropagation()}>
+        <Button $secondary onClick={handleRemove}>
           REMOVE
         </Button>
       </InnerWrapper>
@@ -174,7 +184,7 @@ const Card = ({
 
 Card.propTypes = {
   id: PropTypes.number.isRequired,
-  cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
   title: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
@@ -183,9 +193,10 @@ Card.propTypes = {
 };
 
 Card.defaultProps = {
-  cardType: 'notes',
+  pageContext: 'notes',
   twitterName: null,
   articleUrl: null,
 };
 
-export default Card;
+const CardWithContext = WithContext(Card);
+export default CardWithContext;

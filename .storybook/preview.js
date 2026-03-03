@@ -1,6 +1,6 @@
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../src/theme/mainTheme';
-import GlobalStyle from '../src/theme/GlobalStyle'; 
+import GlobalStyle from '../src/theme/GlobalStyle';
 
 /** @type { import('@storybook/react-vite').Preview } */
 const preview = {
@@ -17,7 +17,7 @@ const preview = {
     (Story) => (
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Story />
+        {Story() }
       </ThemeProvider>
     ),
   ],

@@ -1,11 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import UserPageTemplate from '@/template/UserPageTemplate';
 import Heading from '@/components/atoms/Heading/Heading';
 import Paragraph from '@/components/atoms/Paragraph/Paragraph';
 import Button from '@/components/atoms/Button/Button';
+
+import { removeItem as removeNote } from '@/reducer/notesReducer';
+import { removeItem as removeTwitter } from '@/reducer/twittersReducer';
+import { removeItem as removeArticle } from '@/reducer/articlesReducer';
 
 const StyledWrapper = styled.div`
   padding: 25px 150px 25px 70px;
@@ -67,14 +72,29 @@ const StyledLinkButton = styled(Button)`
 
 
 const DetailsTemplate = ({
+  id,
   pageType,
   title,
   created,
   content,
   articleUrl,
   twitterName,
-}) => (
-  <UserPageTemplate pageType={pageType}>
+}) => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleRemove = () => {
+    if (pageType === 'notes') dispatch(removeNote({ id }));
+    if (pageType === 'twitters') dispatch(removeTwitter({ id }));
+    if (pageType === 'articles') dispatch(removeArticle({ id }));
+
+    // Po usunięciu wracamy do listy głównej
+    navigate(`/${pageType}`);
+  };
+
+  return (
+      <UserPageTemplate pageType={pageType}>
     <StyledWrapper>
       <StyledPageHeader>
         <StyledHeading $big as="h1">
@@ -101,15 +121,17 @@ const DetailsTemplate = ({
       )}
 
       <ButtonWrapper>
-        <StyledLinkButton as={Link} to={`/${pageType}`} activeColor={pageType}>
+        <StyledLinkButton as={Link} to={`/${pageType}`} activecolor={pageType}>
           SAVE / CLOSE
         </StyledLinkButton>
 
-        <Button $subtle>REMOVE ITEM</Button>
+        <Button $subtle onClick={handleRemove}>REMOVE ITEM</Button>
       </ButtonWrapper>
     </StyledWrapper>
   </UserPageTemplate>
-);
+  )
+
+};
 
 DetailsTemplate.propTypes = {
   pageType: PropTypes.string.isRequired,

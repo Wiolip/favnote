@@ -1,40 +1,43 @@
+// DetailsPage.jsx
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import DetailsTemplate from '@/template/DetailsTemplate';
+import WithContext from '@/hoc/WithContext';
 
-const DetailsPage = () => {
-  const { pathname } = useLocation();
-  let pageType = 'notes';
+const DetailsPage = ({ pageContext }) => {
+  const { id } = useParams();
 
+  // Pobieramy dane z Reduxa z obsługą błędów (optional chaining)
+  const activeItem = useSelector((state) => {
+    // Sprawdzamy co mamy w stanie dla danego kontekstu
+    const items = state[pageContext] ? state[pageContext][pageContext] : [];
 
-  if (pathname.includes('twitters')) {
-    pageType = 'twitters';
-  } else if (pathname.includes('articles')) {
-    pageType = 'articles';
-  } else {
-    pageType = 'notes';
+    // Szukamy elementu, upewniając się, że porównujemy stringi (id z URL to zawsze string)
+    return items.find((item) => String(item.id) === String(id));
+  });
+
+  // Zabezpieczenie przed błędem, jeśli itemu jeszcze nie ma
+  if (!activeItem) {
+    return (
+      <UserPageTemplate pageType={pageContext}>
+        <Heading>Loading or item not found...</Heading>
+      </UserPageTemplate>
+    );
   }
-
-  const dummyArticle = {
-    id: 1,
-    title: 'Wake me up when Vue ends',
-    content:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
-    twitterName: 'React_dev',
-    articleUrl: 'https://x.com/reactjs',
-    created: '1 day',
-  };
 
   return (
     <DetailsTemplate
-      pageType={pageType}
-      title={dummyArticle.title}
-      created={dummyArticle.created}
-      content={dummyArticle.content}
-      articleUrl={dummyArticle.articleUrl}
-      twitterName={dummyArticle.twitterName}
+      id={activeItem.id} // Przekazujemy ID do usuwania!
+      pageType={pageContext}
+      title={activeItem.title}
+      created={activeItem.created}
+      content={activeItem.content}
+      articleUrl={activeItem.articleUrl}
+      twitterName={activeItem.twitterName}
     />
   );
 };
+const Detailed = WithContext(DetailsPage);
 
-export default DetailsPage;
+export default Detailed;
