@@ -82,17 +82,17 @@ const NewItemBar = ({ pageContext, isVisible, handleClose }) => {
         {({ values, handleChange, handleBlur }) => (
           <StyledForm>
             <StyledInput
-              type='text'
-              name='title'
-              placeholder='title'
+              type="text"
+              name="title"
+              placeholder="title"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.title}
             />
             {pageContext === 'twitters' && (
               <StyledInput
-                placeholder='X Account Name (e.g. reactjs)'
-                name='twitterName'
+                placeholder="X Account Name (e.g. reactjs)"
+                name="twitterName"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.twitterName}
@@ -100,22 +100,24 @@ const NewItemBar = ({ pageContext, isVisible, handleClose }) => {
             )}
             {pageContext === 'articles' && (
               <StyledInput
-                placeholder='link'
-                name='articleUrl'
+                placeholder="link"
+                name="articleUrl"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.articleUrl}
+                type="url"
+                
               />
             )}
             <StyledTextArea
-              name='content'
-              as='textarea'
-              placeholder='description'
+              name="content"
+              as="textarea"
+              placeholder="description"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.content}
             />
-            <Button type='submit' $activeColor={pageContext}>
+            <Button type="submit" $activeColor={pageContext}>
               Add {pageContext === 'notes' ? 'Note' : pageContext.slice(0, -1)}
             </Button>
           </StyledForm>

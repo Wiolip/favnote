@@ -2,33 +2,39 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = [];
+const BASE_URL = 'http://localhost:9000/api/twitters';
 
-export const fetchTwitters = createAsyncThunk('twitters/fetchTwitters', async () => {
-    const response = await axios.get('http://localhost:9000/api/twitters');
+// 1. Pobieranie - przefiltrowane przez userID
+export const fetchTwitters = createAsyncThunk('twitters/fetchTwitters', async (_, { getState }) => {
+    const { userID } = getState().auth; // Pobieramy ID zalogowanego usera
+    const response = await axios.get(BASE_URL, { params: { userID } });
     return response.data;
 });
 
-export const addTwitterAction = createAsyncThunk('twitters/addTwitter', async (itemContent) => {
-    const response = await axios.post('http://localhost:9000/api/twitters', itemContent);
-    return response.data;
-});
+// 2. Dodawanie - TUTAJ MUSI BYĆ userID
+export const addTwitterAction = createAsyncThunk(
+    'twitters/addTwitter',
+    async (itemContent, { getState }) => {
+        const { userID } = getState().auth;
 
-export const removeTwitterAction = createAsyncThunk('twitters/removeTwitter', async (id) => {
-    console.log('Redux Twitter START: ID to', id);
-    try {
-        await axios.delete(`http://localhost:9000/api/twitters/${id}`);
-        console.log('Redux Twitter SUKCES');
-        return id;
-    } catch (err) {
-        console.error('Redux Twitter BŁĄD:', err.response?.status, err.message);
-        throw err;
+        const response = await axios.post(BASE_URL, {
+            ...itemContent,
+            userID, // <--- Bez tego serwer zwróci 400
+        });
+        return response.data;
     }
+);
+
+// 3. Usuwanie
+export const removeTwitterAction = createAsyncThunk('twitters/removeTwitter', async (id) => {
+    await axios.delete(`${BASE_URL}/${id}`);
+    return id;
 });
 
 const twitters = createSlice({
     name: 'twitters',
     initialState,
-    reducers: {}, // Usunięto nieużywane removeItem
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(fetchTwitters.fulfilled, (state, action) => {
@@ -38,7 +44,6 @@ const twitters = createSlice({
                 state.push(action.payload);
             })
             .addCase(removeTwitterAction.fulfilled, (state, action) => {
-                // Filtrowanie stanu po udanym usunięciu z bazy
                 return state.filter((item) => (item._id || item.id) !== action.payload);
             });
     },

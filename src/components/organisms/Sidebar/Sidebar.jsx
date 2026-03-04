@@ -1,8 +1,10 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux'; 
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ButtonIcon from '@/components/atoms/ButtonIcon/ButtonIcon';
+import { logoutAction } from '@/reducer/authReducer';
 
 import bulbIcon from '@/assets/icons/bulb.svg';
 import logoutIcon from '../../../assets/icons/logout.svg?url';
@@ -46,9 +48,9 @@ const StyledLinksList = styled.ul`
   gap: 20px;
 `;
 
-// ---- Sidebar component ----
 const Sidebar = ({ pageType }) => {
   const location = useLocation();
+  const dispatch = useDispatch(); // Inicjalizacja dispatcha
 
   const links = [
     { to: '/notes', icon: penIcon },
@@ -80,6 +82,7 @@ const Sidebar = ({ pageType }) => {
         to="/login"
         icon={logoutIcon}
         style={{ marginTop: 'auto' }}
+        onClick={() => dispatch(logoutAction())} // Odpalamy nową akcję
       />
     </StyledWrapper>
   );

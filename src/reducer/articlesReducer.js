@@ -2,30 +2,37 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = [];
+const BASE_URL = 'http://localhost:9000/api/articles';
 
-export const fetchArticles = createAsyncThunk('articles/fetchArticles', async () => {
-    const response = await axios.get('http://localhost:9000/api/articles');
+// 1. Pobieranie - dodajemy params, żeby widzieć tylko swoje artykuły
+export const fetchArticles = createAsyncThunk('articles/fetchArticles', async (_, { getState }) => {
+    const { userID } = getState().auth;
+    const response = await axios.get(BASE_URL, { params: { userID } });
     return response.data;
 });
 
-export const addArticleAction = createAsyncThunk('articles/addArticle', async (itemContent) => {
-    const response = await axios.post('http://localhost:9000/api/articles', itemContent);
-    return response.data;
-});
+// 2. Dodawanie - TUTAJ KLUCZOWA ZMIANA
+export const addArticleAction = createAsyncThunk(
+    'articles/addArticle',
+    async (itemContent, { getState }) => {
+        // Wyciągamy userID ze stanu Redux (z authReducer)
+        const { userID } = getState().auth;
 
-export const removeArticleAction = createAsyncThunk('articles/removeArticle', async (id) => {
-    console.log('Redux Article START: ID to', id);
-    try {
-        await axios.delete(`http://localhost:9000/api/articles/${id}`);
-        console.log('Redux Article SUKCES');
-        return id;
-    } catch (err) {
-        console.error('Redux Article BŁĄD:', err.response?.status, err.message);
-        throw err;
+        const response = await axios.post(BASE_URL, {
+            ...itemContent,
+            userID, // <--- To naprawia błąd 400!
+        });
+        return response.data;
     }
+);
+
+// 3. Usuwanie
+export const removeArticleAction = createAsyncThunk('articles/removeArticle', async (id) => {
+    await axios.delete(`${BASE_URL}/${id}`);
+    return id;
 });
 
-const articles = createSlice({
+const articlesSlice = createSlice({
     name: 'articles',
     initialState,
     reducers: {},
@@ -43,4 +50,4 @@ const articles = createSlice({
     },
 });
 
-export default articles.reducer;
+export default articlesSlice.reducer;

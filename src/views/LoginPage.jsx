@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import { Link, Navigate } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux'; 
 import AuthTemplate from '@/template/AuthTemplate';
 import Heading from '@/components/atoms/Heading/Heading';
 import Input from '@/components/atoms/Input/Input';
 import Button from '@/components/atoms/Button/Button';
 import { routes } from '@/routes/routes';
-import { authenticate as authenticateAction } from '@/acton/action';
+import { authenticateAction } from '@/reducer/authReducer';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -32,8 +32,12 @@ const StyledLink = styled(Link)`
   margin: 20px 0 50px;
 `;
 
-const LoginPage = ({ userID, authenticate }) => {
-  // Jeśli mamy userID w Reduksie, od razu uciekamy do strony głównej
+const LoginPage = () => {
+  const dispatch = useDispatch();
+
+  // Wyciągamy userID ze stanu za pomocą useSelector
+  const userID = useSelector((state) => state.auth.userID);
+
   if (userID) {
     return <Navigate to={routes.home} />;
   }
@@ -43,7 +47,8 @@ const LoginPage = ({ userID, authenticate }) => {
       <Formik
         initialValues={{ username: '', password: '' }}
         onSubmit={({ username, password }) => {
-          authenticate(username, password);
+          // Wysyłamy obiekt, bo tak zdefiniowaliśmy authenticateAction w thunku
+          dispatch(authenticateAction({ username, password }));
         }}
       >
         {({ handleChange, handleBlur, values }) => (
@@ -78,14 +83,4 @@ const LoginPage = ({ userID, authenticate }) => {
   );
 };
 
-// Zmienione mapowanie, aby poprawnie wyciągać userID ze stanu
-const mapStateToProps = (state) => ({
-  userID: state.auth ? state.auth.userID : null,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  authenticate: (username, password) =>
-    dispatch(authenticateAction(username, password)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default LoginPage;

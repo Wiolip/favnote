@@ -23,21 +23,20 @@ const DetailsPage = () => {
 
   const items = useSelector((state) => state[pageContext] || []);
 
-  // Szukamy konkretnego elementu
+  // Szukamy konkretnego elementu z dodatkowym sprawdzeniem
   const activeItem = items.find((item) => {
-    const itemIdentifier = item._id || item.id;
+    const itemIdentifier = item?._id || item?.id;
     return String(itemIdentifier) === String(id);
   });
 
   useEffect(() => {
+    console.log('Obecny kontekst:', pageContext, 'ID:', id);
     if (items.length === 0) {
       if (pageContext === 'notes') dispatch(fetchNotes());
       if (pageContext === 'articles') dispatch(fetchArticles());
       if (pageContext === 'twitters') dispatch(fetchTwitters());
     }
-  }, [dispatch, items.length, pageContext]);
-
-
+  }, [dispatch, items.length, pageContext, id]);
 
   if (!activeItem) {
     return (
@@ -60,6 +59,6 @@ const DetailsPage = () => {
       twitterName={activeItem.twitterName}
     />
   );
-};;
+};;;
 
 export default DetailsPage;
