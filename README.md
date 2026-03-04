@@ -1,16 +1,10 @@
-# 🚀 FavNotes – Modern MERN Dashboard
+Markdown
+
+# 🚀 FlashNotes – Modern MERN Dashboard
 
 A professional, high-performance note-taking application built with **React 18**, **Redux**, and **Styled-components**. The project follows **Atomic Design** principles and is fully integrated with a **MongoDB** database.
 
-## 📂 Project Structure
-
-src/
-├── assets/ # Icons, fonts, and images
-├── components/ # Atomic UI components (Styled-components)
-├── routes/ # Centralized route definitions
-├── store/ # Redux logic: reducers, actions & thunks
-├── theme/ # Global styles and mainTheme (CSS-in-JS)
-├── views
+[Image of MERN stack architecture diagram]
 
 ## ✨ Key Features
 
@@ -38,23 +32,43 @@ This project utilizes a sophisticated styling system to ensure modularity and sc
 - **Backend & DB**: Node.js/Express, **MongoDB Atlas**.
 - **Build Tool**: Vite (Lightning-fast HMR).
 
-## 🚀 Getting Started
+## 📂 Project Structure
 
-Clone the repo
+```text
+src/
+  ├── assets/          # Icons, fonts, and images
+  ├── components/      # Atomic UI components (Styled-components)
+  ├── routes/          # Centralized route definitions
+  ├── store/           # Redux logic: reducers, actions & thunks
+  ├── theme/           # Global styles and mainTheme (CSS-in-JS)
+  ├── views/           # Full page views (Notes, Articles, Twitters)
+  └── template/        # Layout wrappers (MainTemplate, AuthTemplate)
+🚀 Getting Started
+Clone the repository
 
 Bash
-git clone https://github.com/your-username/flash-notes.git
+git clone [https://github.com/your-username/flash-notes.git](https://github.com/your-username/flash-notes.git)
 Install dependencies
 
 Bash
 npm install
-Run the app
+Setup Environment
+Ensure your backend API (MongoDB/Express) is running on http://localhost:9000.
+
+Run the development server
 
 Bash
 npm run dev
-Run Backend (Optional)
-Make sure your local API is running on http://localhost:9000.
+📝 Recent Milestones
+✅ Refactored from Class Components/Context to Modern Redux Hooks (useSelector, useDispatch).
 
-```
+✅ Implemented CSS-in-JS dynamic coloring system.
 
+✅ Fixed navigation issues with React Router v6.
+
+✅ Automated date formatting for new entries.
+
+⏳ Next Step: Real-time Search functionality.
+
+Created with ❤️ by a Modern React Developer.
 ```
