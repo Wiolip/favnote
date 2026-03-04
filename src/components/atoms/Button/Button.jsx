@@ -15,8 +15,8 @@ const Button = styled.button.withConfig({
   font-size: 16px;
   color: ${({ theme }) => theme.black};
 
-  background-color: ${({ theme, activecolor }) =>
-    theme[activecolor] || theme.note};
+  background-color: ${({ theme, $activeColor }) =>
+    theme[$activeColor] || theme.note};
 
   ${({ $secondary }) =>
     $secondary &&

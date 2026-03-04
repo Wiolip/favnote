@@ -40,8 +40,8 @@ const Icon = styled.img`
 
 const Input = ({ $search, ...props }) => (
   <Wrapper>
-    {$search && <Icon src={magnifierIcon} alt='search' />}
     <StyledInput $search={$search} {...props} />
+    {$search && <Icon src={magnifierIcon} alt="search" />}
   </Wrapper>
 );
 

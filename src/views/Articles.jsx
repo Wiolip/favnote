@@ -1,23 +1,30 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react'; // 1. Dodajemy useEffect
+import { useSelector, useDispatch } from 'react-redux';
 import GridTemplate from '@/template/GridTemplate';
 import Card from '@/components/molecules/Card/Card';
-
+import { fetchArticles } from '@/reducer/articlesReducer'; // 2. Importujemy nową akcję async
 
 const Articles = () => {
   const articles = useSelector((state) => state.articles);
+  const dispatch = useDispatch();
+
+  // 3. Gdy komponent się montuje, prosimy backend o dane
+  useEffect(() => {
+    dispatch(fetchArticles());
+  }, [dispatch]);
 
   return (
     <GridTemplate pageType="articles">
-      {articles.map(({ title, content, articleUrl, created, id }) => (
+      {articles.map(({ title, content, articleUrl, created, _id, id }) => (
         <Card
-          id={id}
+          // MongoDB używa _id, więc warto to uwzględnić
+          id={_id || id}
           cardType="articles"
           title={title}
           content={content}
           articleUrl={articleUrl}
           created={created}
-          key={id}
+          key={_id || id}
         />
       ))}
     </GridTemplate>

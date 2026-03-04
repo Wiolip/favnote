@@ -51,7 +51,7 @@ const StyledButtonIcon = styled(ButtonIcon)`
   position: fixed;
   bottom: 40px;
   right: 40px;
-  background-color: ${({ activecolor, theme }) => theme[activecolor]};
+  background-color: ${({ $activeColor, theme }) => theme[$activeColor]};
   background-size: 35%;
   border-radius: 50px;
   z-index: 100;
@@ -82,7 +82,7 @@ const GridTemplate = ({ children, pageType }) => {
           <StyledButtonIcon
             onClick={toggleNewItemBar}
             icon={plusIcon}
-            activecolor={pageType}
+            $activeColor={pageType}
           />
           <NewItemBar
             handleClose={toggleNewItemBar}

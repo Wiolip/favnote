@@ -4,11 +4,13 @@ import { Navigate, Link } from 'react-router-dom';
 import WithContext from '@/hoc/WithContext';
 import { useDispatch } from 'react-redux';
 
-import { removeItem as removeNote } from '@/reducer/notesReducer';
-import { removeItem as removeTwitter } from '@/reducer/twittersReducer';
-import { removeItem as removeArticle } from '@/reducer/articlesReducer';
+import { removeNoteAction } from '@/reducer/notesReducer';
+import { removeArticleAction } from '@/reducer/articlesReducer';
+import { removeTwitterAction } from '@/reducer/twittersReducer';
+
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+
 
 import Paragraph from '@/components/atoms/Paragraph/Paragraph';
 import Heading from '@/components/atoms/Heading/Heading';
@@ -31,8 +33,8 @@ const InnerWrapper = styled('div').withConfig({
 })`
   position: relative;
   padding: 17px 30px;
-  background-color: ${({ activeColor, theme }) =>
-    activeColor ? theme[activeColor] : 'white'};
+  background-color: ${({ $activeColor, theme }) =>
+    $activeColor ? theme[$activeColor] : 'white'};
 
   :first-of-type {
     z-index: 9;
@@ -115,7 +117,7 @@ const StyledLink = styled(Link)`
 
 
 const Card = ({
-  id,
+  _id,
   pageContext,
   title,
   created,
@@ -129,29 +131,42 @@ const Card = ({
  const handleCardClick = () => setRedirect(true);
 
 
- const handleRemove = (e) => {
-   e.stopPropagation();
+const handleRemove = (e) => {
+  e.stopPropagation();
+  console.log('Kliknięto REMOVE w karcie. ID:', _id);
 
-   if (pageContext === 'notes') dispatch(removeNote({ id }));
-   if (pageContext === 'twitters') dispatch(removeTwitter({ id }));
-   if (pageContext === 'articles') dispatch(removeArticle({ id }));
- };
+  if (pageContext === 'notes') dispatch(removeNoteAction(_id));
+  if (pageContext === 'twitters') dispatch(removeTwitterAction(_id));
+  if (pageContext === 'articles') dispatch(removeArticleAction(_id));
+};
 
- if (redirect) return <Navigate to={`/${pageContext}/details/${id}`} />;
+ if (redirect) return <Navigate to={`/${pageContext}/details/${_id}`} />;
 
   return (
     <StyledWrapper onClick={handleCardClick}>
-      <InnerWrapper activeColor={pageContext}>
+      <InnerWrapper $activeColor={pageContext}>
         <StyledHeading>{title}</StyledHeading>
         <DateInfo>{created}</DateInfo>
 
         {pageContext === 'twitters' && twitterName && (
           <StyledAvatarWrapper>
             <StyledAvatar
-              src={`https://i.pravatar.cc/300/${twitterName}`}
-              alt={twitterName}
+              src={`https://unavatar.io/x/${twitterName}`}
+              alt={`Avatar of ${twitterName}`}
             />
           </StyledAvatarWrapper>
+        )}
+
+        {pageContext === 'twitters' && (
+          <StyledLink
+            as="a"
+            href={`https://x.com/${twitterName}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+          >
+            View on X
+          </StyledLink>
         )}
 
         {pageContext === 'articles' && articleUrl && (
@@ -169,7 +184,7 @@ const Card = ({
       <InnerWrapper flex>
         <ContentWrapper>
           <Paragraph>{content}</Paragraph>
-          <StyledLink as={Link} to={`/${pageContext}/details/${id}`}>
+          <StyledLink as={Link} to={`/${pageContext}/details/${_id}`}>
             read more
           </StyledLink>
         </ContentWrapper>
@@ -183,7 +198,7 @@ const Card = ({
 };
 
 Card.propTypes = {
-  id: PropTypes.number.isRequired,
+  _id: PropTypes.string.isRequired,
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
   title: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,

@@ -1,13 +1,18 @@
-import React from 'react';
-import { useParams, useLocation } from 'react-router-dom'; // Dodany useLocation
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import DetailsTemplate from '@/template/DetailsTemplate';
 import UserPageTemplate from '@/template/UserPageTemplate';
 import Heading from '@/components/atoms/Heading/Heading';
 
+import { fetchNotes } from '@/reducer/notesReducer';
+import { fetchArticles } from '@/reducer/articlesReducer';
+import { fetchTwitters } from '@/reducer/twittersReducer';
+
 const DetailsPage = () => {
   const { id } = useParams();
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
 
   // Sprawdzamy adres URL: jeśli zawiera "twitters", context to "twitters" itd.
   const pageContext = pathname.includes('twitters')
@@ -16,11 +21,23 @@ const DetailsPage = () => {
       ? 'articles'
       : 'notes';
 
-  const activeItem = useSelector((state) => {
+  const items = useSelector((state) => state[pageContext] || []);
 
-    const items = state[pageContext]?.[pageContext] || state[pageContext] || [];
-    return items.find((item) => String(item.id) === String(id));
+  // Szukamy konkretnego elementu
+  const activeItem = items.find((item) => {
+    const itemIdentifier = item._id || item.id;
+    return String(itemIdentifier) === String(id);
   });
+
+  useEffect(() => {
+    if (items.length === 0) {
+      if (pageContext === 'notes') dispatch(fetchNotes());
+      if (pageContext === 'articles') dispatch(fetchArticles());
+      if (pageContext === 'twitters') dispatch(dispatch(fetchTwitters()));
+    }
+  }, [dispatch, items.length, pageContext]);
+
+
 
   if (!activeItem) {
     return (
@@ -34,7 +51,7 @@ const DetailsPage = () => {
 
   return (
     <DetailsTemplate
-      id={activeItem.id}
+      _id={activeItem._id}
       pageType={pageContext}
       title={activeItem.title}
       created={activeItem.created}
@@ -43,6 +60,6 @@ const DetailsPage = () => {
       twitterName={activeItem.twitterName}
     />
   );
-};
+};;
 
 export default DetailsPage;

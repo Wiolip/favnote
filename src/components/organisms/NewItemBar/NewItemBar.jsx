@@ -7,15 +7,15 @@ import WithContext from '@/hoc/withContext';
 import Heading from '@/components/atoms/Heading/Heading';
 import { useDispatch } from 'react-redux';
 import { Formik, Form } from 'formik';
-import { v4 as uuidv4 } from 'uuid'; // Opcjonalnie do generowania ID
 
 
-import { addItem as addNote } from '@/reducer/notesReducer';
-import { addItem as addTwitter } from '@/reducer/twittersReducer';
-import { addItem as addArticle } from '@/reducer/articlesReducer';
+// Importujemy konkretne akcje asynchroniczne z Twoich plików
+import { addNoteAction as addNote } from '@/reducer/notesReducer';
+import { addTwitterAction as addTwitter } from '@/reducer/twittersReducer';
+import { addArticleAction as addArticle } from '@/reducer/articlesReducer';
 
 const StyledWrapper = styled.div`
-  border-left: 10px solid ${({ theme, activecolor }) => theme[activecolor]};
+  border-left: 10px solid ${({ theme, $activeColor }) => theme[$activeColor]};
   z-index: 99;
   position: fixed;
   display: flex;
@@ -27,7 +27,7 @@ const StyledWrapper = styled.div`
   width: 680px;
   background-color: white;
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-  transform: translate(${({ isVisible }) => (isVisible ? '0' : '100%')});
+  transform: translate(${({ $isVisible }) => ($isVisible ? '0' : '100%')});
   transition: transform 0.25s ease-in-out;
 `;
 
@@ -56,8 +56,8 @@ const NewItemBar = ({ pageContext, isVisible, handleClose }) => {
   const dispatch = useDispatch();
 
   return (
-    <StyledWrapper isVisible={isVisible} activecolor={pageContext}>
-      <Heading big>Create new {pageContext}</Heading>
+    <StyledWrapper $isVisible={isVisible} $activeColor={pageContext}>
+      <Heading $big>Create new {pageContext}</Heading>
       <Formik
         initialValues={{
           title: '',
@@ -67,11 +67,9 @@ const NewItemBar = ({ pageContext, isVisible, handleClose }) => {
         }}
         onSubmit={(values, { resetForm }) => {
           const newItem = {
-            id: uuidv4(),
-            created: new Date().toLocaleDateString(),
+            // created: new Date().toLocaleDateString(),
             ...values,
           };
-
 
           if (pageContext === 'notes') dispatch(addNote(newItem));
           if (pageContext === 'twitters') dispatch(addTwitter(newItem));
@@ -84,17 +82,17 @@ const NewItemBar = ({ pageContext, isVisible, handleClose }) => {
         {({ values, handleChange, handleBlur }) => (
           <StyledForm>
             <StyledInput
-              type="text"
-              name="title"
-              placeholder="title"
+              type='text'
+              name='title'
+              placeholder='title'
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.title}
             />
             {pageContext === 'twitters' && (
               <StyledInput
-                placeholder="twitter name eg. hello_roman"
-                name="twitterName"
+                placeholder='X Account Name (e.g. reactjs)'
+                name='twitterName'
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.twitterName}
@@ -102,22 +100,22 @@ const NewItemBar = ({ pageContext, isVisible, handleClose }) => {
             )}
             {pageContext === 'articles' && (
               <StyledInput
-                placeholder="link"
-                name="articleUrl"
+                placeholder='link'
+                name='articleUrl'
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.articleUrl}
               />
             )}
             <StyledTextArea
-              name="content"
-              as="textarea"
-              placeholder="description"
+              name='content'
+              as='textarea'
+              placeholder='description'
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.content}
             />
-            <Button type="submit" activecolor={pageContext}>
+            <Button type='submit' $activeColor={pageContext}>
               Add {pageContext === 'notes' ? 'Note' : pageContext.slice(0, -1)}
             </Button>
           </StyledForm>

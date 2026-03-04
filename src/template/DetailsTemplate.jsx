@@ -8,9 +8,10 @@ import Heading from '@/components/atoms/Heading/Heading';
 import Paragraph from '@/components/atoms/Paragraph/Paragraph';
 import Button from '@/components/atoms/Button/Button';
 
-import { removeItem as removeNote } from '@/reducer/notesReducer';
-import { removeItem as removeTwitter } from '@/reducer/twittersReducer';
-import { removeItem as removeArticle } from '@/reducer/articlesReducer';
+
+import { removeNoteAction } from '@/reducer/notesReducer';
+import { removeTwitterAction } from '@/reducer/twittersReducer';
+import { removeArticleAction } from '@/reducer/articlesReducer';
 
 const StyledWrapper = styled.div`
   padding: 25px 150px 25px 70px;
@@ -69,10 +70,8 @@ const StyledLinkButton = styled(Button)`
 `;
 
 
-
-
 const DetailsTemplate = ({
-  id,
+  _id,
   pageType,
   title,
   created,
@@ -85,9 +84,12 @@ const DetailsTemplate = ({
   const navigate = useNavigate();
 
   const handleRemove = () => {
-    if (pageType === 'notes') dispatch(removeNote({ id }));
-    if (pageType === 'twitters') dispatch(removeTwitter({ id }));
-    if (pageType === 'articles') dispatch(removeArticle({ id }));
+    console.log('ID do usunięcia:', _id);
+    console.log('Typ strony:', pageType);
+
+    if (pageType === 'notes') dispatch(removeNoteAction(_id));
+    if (pageType === 'twitters') dispatch(removeTwitterAction(_id));
+    if (pageType === 'articles') dispatch(removeArticleAction(_id));
 
     // Po usunięciu wracamy do listy głównej
     navigate(`/${pageType}`);
@@ -121,7 +123,7 @@ const DetailsTemplate = ({
       )}
 
       <ButtonWrapper>
-        <StyledLinkButton as={Link} to={`/${pageType}`} activecolor={pageType}>
+        <StyledLinkButton as={Link} to={`/${pageType}`} $activeColor={pageType}>
           SAVE / CLOSE
         </StyledLinkButton>
 
@@ -134,6 +136,7 @@ const DetailsTemplate = ({
 };
 
 DetailsTemplate.propTypes = {
+  _id: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
   title: PropTypes.string,
   created: PropTypes.string,
