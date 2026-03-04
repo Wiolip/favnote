@@ -57,13 +57,13 @@ const ButtonWrapper = styled.div`
   margin-top: 30px;
 `;
 
+// Uproszczony styl - kolor tła załatwia bazowy komponent Button przez prop $activeColor
 const StyledLinkButton = styled(Button)`
   display: flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
   color: ${({ theme }) => theme.black};
-  text-decoration: none;
   line-height: 47px;
   margin-bottom: 10px;
 `;
@@ -81,25 +81,24 @@ const DetailsTemplate = ({
   const navigate = useNavigate();
 
   const handleRemove = () => {
-    console.log('ID do usunięcia:', _id);
-    console.log('Typ strony:', pageType);
+    // 1. NAJPIERW uciekamy ze strony (fix dla białego ekranu)
+    navigate(`/${pageType}`);
 
+    // 2. POTEM usuwamy z Reduxa
     if (pageType === 'notes') dispatch(removeNoteAction(_id));
     if (pageType === 'twitters') dispatch(removeTwitterAction(_id));
     if (pageType === 'articles') dispatch(removeArticleAction(_id));
-
-    // Po usunięciu wracamy do listy głównej
-    navigate(`/${pageType}`);
   };
 
   return (
     <UserPageTemplate pageType={pageType}>
       <StyledWrapper>
         <StyledPageHeader>
+          {/* Używamy $big z dolarem zgodnie z nowym Button/Heading stylem */}
           <StyledHeading $big as="h1">
             {title}
           </StyledHeading>
-          <StyledParagraph>CREATED - {created} ago</StyledParagraph>
+          <StyledParagraph>CREATED - {created}</StyledParagraph>
         </StyledPageHeader>
         <Paragraph>{content}</Paragraph>
 
@@ -114,7 +113,11 @@ const DetailsTemplate = ({
         )}
 
         {pageType === 'twitters' && (
-          <StyledLink href={`https://x.com/${twitterName}`} target="_blank">
+          <StyledLink
+            href={`https://twitter.com/${twitterName}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             OPEN THIS X (TWITTER)
           </StyledLink>
         )}
@@ -122,7 +125,7 @@ const DetailsTemplate = ({
         {pageType === 'twitters' && (
           <StyledImage
             alt={title}
-            src={`https://unavatar.io/x/${twitterName}`}
+            src={`https://unavatar.io/twitter/${twitterName}`}
           />
         )}
 
@@ -145,16 +148,17 @@ const DetailsTemplate = ({
 };
 
 DetailsTemplate.propTypes = {
-  _id: PropTypes.string.isRequired,
-  pageType: PropTypes.string.isRequired,
+  _id: PropTypes.string, // Zmienione na opcjonalne, bo przy starcie może być null
+  pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
   title: PropTypes.string,
-  created: PropTypes.string,
+  created: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   content: PropTypes.string,
   articleUrl: PropTypes.string,
   twitterName: PropTypes.string,
 };
 
 DetailsTemplate.defaultProps = {
+  _id: '',
   title: '',
   created: '',
   content: '',

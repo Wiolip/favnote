@@ -1,8 +1,6 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
-const Button = styled.button.withConfig({
-  shouldForwardProp: (prop) => !prop.startsWith('$') && prop !== 'activeColor',
-})`
+const Button = styled.button`
   padding: 0;
   border: none;
   border-radius: 50px;
@@ -16,8 +14,9 @@ const Button = styled.button.withConfig({
   color: ${({ theme }) => theme.black};
 
   background-color: ${({ theme, $activeColor }) =>
-    theme[$activeColor] || theme.note};
+    theme[$activeColor] || theme.notes};
 
+  /* Wariant Secondary (np. przycisk REMOVE w Gridzie) */
   ${({ $secondary }) =>
     $secondary &&
     css`
@@ -27,16 +26,15 @@ const Button = styled.button.withConfig({
       font-size: 10px;
     `}
 
+  /* Wariant Subtle (np. przycisk REMOVE w DetailsPage) */
   ${({ $subtle }) =>
     $subtle &&
     css`
       background: none;
-      border: none;
       color: ${({ theme }) => theme.grey300};
       text-decoration: underline;
       width: auto;
       height: auto;
-      padding: 0;
       font-size: 12px;
       text-transform: lowercase;
 

@@ -4,18 +4,21 @@ import Sidebar from '@/components/layout/Sidebar/Sidebar';
 
 const UserPageTemplate = ({ children, pageType }) => (
   <>
+    
     <Sidebar pageType={pageType} />
     {children}
   </>
 );
 
 UserPageTemplate.propTypes = {
-  children: PropTypes.element.isRequired,
-  pageType: PropTypes.oneOf(['note', 'twitter', 'article']),
+  // Zmienione na node, bo children to często więcej niż 1 element
+  children: PropTypes.node.isRequired,
+  // Zmienione na liczbę mnogą, żeby pasowało do reszty aplikacji i theme.js
+  pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
 };
 
 UserPageTemplate.defaultProps = {
-  pageType: 'note',
+  pageType: 'notes',
 };
 
 export default UserPageTemplate;

@@ -42,7 +42,6 @@ const Root = () => (
             element={<div>Tu będzie formularz dodawania</div>}
           />
 
-          <Route path={routes.login} element={<div>Strona logowania</div>} />
         </Routes>
       </MainTemplate>
     </BrowserRouter>

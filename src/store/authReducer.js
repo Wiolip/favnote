@@ -27,7 +27,7 @@ export const authenticateAction = createAsyncThunk(
 
 const authSlice = createSlice({
     name: 'auth',
-    initialState, // ZMIANA: Używamy stałej zdefiniowanej powyżej
+    initialState,
     reducers: {
         // --- AKCJA WYLOGOWANIA ---
         logoutAction: (state) => {
@@ -44,7 +44,6 @@ const authSlice = createSlice({
                 state.isLoading = false;
                 const id = action.payload._id || action.payload.userID || action.payload;
                 state.userID = id;
-                // ZAPISUJEMY ID w przeglądarce
                 localStorage.setItem('userID', id);
             })
             .addCase(authenticateAction.rejected, (state) => {

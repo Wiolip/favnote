@@ -1,13 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
-import { Link } from 'react-router-dom';
+import { routes } from '@/routes/routes';
 import AuthTemplate from '@/template/AuthTemplate';
 import Heading from '@/components/ui/Heading/Heading';
-import Input from '@/components/ui/Input/Input';
 import Button from '@/components/ui/Button/Button';
-import { routes } from '@/routes/routes';
-import axios from 'axios';
+import Input from '@/components/ui/Input/Input';
+import  authenticate from '@/store/authActions';
+import styled from 'styled-components';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -29,52 +30,63 @@ const StyledLink = styled(Link)`
   color: black;
   text-transform: uppercase;
   margin: 20px 0 50px;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
-const RegisterPage = () => (
-  <AuthTemplate>
-    <Formik
-      initialValues={{ username: '', password: '' }}
-      onSubmit={({ username, password }) => {
-        // Prosta rejestracja bez Reduxa na start
-        axios
-          .post('http://localhost:9000/api/user/register', {
-            username,
-            password,
-          })
-          .then(() => alert('Account created! You can log in now.'))
-          .catch((err) => alert('Error: ' + err.response.data.error));
-      }}
-    >
-      {({ handleChange, handleBlur, values }) => (
-        <>
-          <Heading>Create account</Heading>
-          <StyledForm>
-            <StyledInput
-              type="text"
-              name="username"
-              placeholder="Login"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.username}
-            />
-            <StyledInput
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-            />
-            <Button $activeColor="notes" type="submit">
-              register
-            </Button>
-          </StyledForm>
-          <StyledLink to={routes.login}>I already have an account</StyledLink>
-        </>
-      )}
-    </Formik>
-  </AuthTemplate>
-);
+
+const RegisterPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+
+  return (
+    <AuthTemplate>
+      <Formik
+        initialValues={{ username: '', password: '' }}
+        onSubmit={({ username, password }) => {
+
+          dispatch(authenticate(username, password, 'register'))
+            .then(() => {
+              navigate(routes.login);
+              alert('Account created! Now log in.');
+            })
+            .catch(() => alert('Registration failed. Try again.'));
+        }}
+      >
+        {({ handleChange, handleBlur, values }) => (
+          <>
+            <Heading>Create account</Heading>
+            <StyledForm>
+              <StyledInput
+                name="username"
+                placeholder="Login"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.username}
+              />
+              <StyledInput
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+              />
+              <Button $activeColor="notes" type="submit">
+                register
+              </Button>
+            </StyledForm>
+            <StyledLink to={routes.login} > go to login page</StyledLink>
+          </>
+        )}
+      </Formik>
+    </AuthTemplate>
+  );
+};
 
 export default RegisterPage;

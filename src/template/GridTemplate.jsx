@@ -1,33 +1,20 @@
-import React, { useState } from 'react'; // Dodany useState
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import PageContext from '@/context/PageContext';
-import UserPageTemplate from './UserPageTemplate';
+import { useLocation } from 'react-router-dom';
+import Sidebar from '@/components/layout/Sidebar/Sidebar';
 import Input from '@/components/ui/Input/Input';
 import Heading from '@/components/ui/Heading/Heading';
 import Paragraph from '@/components/ui/Paragraph/Paragraph';
-import ButtonIcon from '@/components/ui/ButtonIcon/ButtonIcon';
-import NewItemBar from '@/components/layout/NewItemBar/NewItemBar'; // Dodany import
-import plusIcon from '@/assets/icons/plus.svg?url';
 
 const StyledWrapper = styled.div`
-  padding: 25px 150px 25px 70px;
-  position: relative;
+  padding: 25px 150px 25px 200px;
 `;
 
 const StyledGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 85px;
-
-  @media (max-width: 1500px) {
-    grid-gap: 45px;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 1100px) {
-    grid-template-columns: 1fr;
-  }
 `;
 
 const StyledPageHeader = styled.div`
@@ -36,10 +23,7 @@ const StyledPageHeader = styled.div`
 
 const StyledHeading = styled(Heading)`
   margin: 25px 0 0 0;
-
-  ::first-letter {
-    text-transform: uppercase;
-  }
+  text-transform: capitalize;
 `;
 
 const StyledParagraph = styled(Paragraph)`
@@ -47,59 +31,36 @@ const StyledParagraph = styled(Paragraph)`
   font-weight: ${({ theme }) => theme.bold};
 `;
 
-const StyledButtonIcon = styled(ButtonIcon)`
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-  background-color: ${({ $activeColor, theme }) => theme[$activeColor]};
-  background-size: 35%;
-  border-radius: 50px;
-  z-index: 100;
-  cursor: pointer;
-`;
+const GridTemplate = ({ children }) => {
+  const { pathname } = useLocation(); // 2. Pobieramy aktualną ścieżkę
 
-const GridTemplate = ({ children, pageType }) => {
-  const [isNewItemBarVisible, setIsNewItemBarVisible] = useState(false);
-
-  const toggleNewItemBar = () => {
-    setIsNewItemBarVisible(!isNewItemBarVisible);
+  // 3. Logika rozpoznawania typu strony (identyczna jak w Sidebarze)
+  const getPageType = () => {
+    if (pathname.includes('notes')) return 'notes';
+    if (pathname.includes('twitters')) return 'twitters';
+    if (pathname.includes('articles')) return 'articles';
+    return 'notes';
   };
 
-  return (
-    <PageContext.Provider value={pageType}>
-      <UserPageTemplate pageType={pageType}>
-        <StyledWrapper>
-          <StyledPageHeader>
-            <Input $search placeholder="Search" />
-            <StyledHeading $big as="h1">
-              {pageType}
-            </StyledHeading>
-            <StyledParagraph>6 {pageType}</StyledParagraph>
-          </StyledPageHeader>
-          <StyledGrid>{children}</StyledGrid>
+  const pageType = getPageType();
 
-          <StyledButtonIcon
-            onClick={toggleNewItemBar}
-            icon={plusIcon}
-            $activeColor={pageType}
-          />
-          <NewItemBar
-            handleClose={toggleNewItemBar}
-            isVisible={isNewItemBarVisible}
-          />
-        </StyledWrapper>
-      </UserPageTemplate>
-    </PageContext.Provider>
+  return (
+    <StyledWrapper>
+      <Sidebar />
+      <StyledPageHeader>
+        <Input search placeholder="Search" />
+        <StyledHeading as="h1" $big>
+          {pageType}
+        </StyledHeading>
+        <StyledParagraph>6 {pageType}</StyledParagraph>
+      </StyledPageHeader>
+      <StyledGrid>{children}</StyledGrid>
+    </StyledWrapper>
   );
 };
 
 GridTemplate.propTypes = {
   children: PropTypes.node.isRequired,
-  pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
-};
-
-GridTemplate.defaultProps = {
-  pageType: 'notes',
 };
 
 export default GridTemplate;

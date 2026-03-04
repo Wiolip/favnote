@@ -12,9 +12,13 @@ const StyledButton = styled.button`
   align-items: center;
   justify-content: center;
 
-  &:hover {
-    background-color: ${({ $active }) =>
-      $active ? 'white' : 'rgba(255, 255, 255, 0.1)'};
+  &.active {
+    background-color: white;
+  }
+
+  &:not(.active):hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
   }
 
   img {

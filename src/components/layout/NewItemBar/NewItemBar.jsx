@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Input from '@/components/ui/Input/Input';
-import Button from '@/components/ui/Button/Button';
-import WithContext from '@/hook/withContext';
-import Heading from '@/components/ui/Heading/Heading';
+import { useLocation } from 'react-router-dom'; // Zamiennik dla Contextu
 import { useDispatch } from 'react-redux';
 import { Formik, Form } from 'formik';
+import Input from '@/components/ui/Input/Input';
+import Button from '@/components/ui/Button/Button';
+import Heading from '@/components/ui/Heading/Heading';
 
-// Importujemy konkretne akcje asynchroniczne z Twoich plików
 import { addNoteAction as addNote } from '@/store/notesReducer';
 import { addTwitterAction as addTwitter } from '@/store/twittersReducer';
 import { addArticleAction as addArticle } from '@/store/articlesReducer';
 
 const StyledWrapper = styled.div`
-  border-left: 10px solid ${({ theme, $activeColor }) => theme[$activeColor]};
+  border-left: 10px solid
+    ${({ theme, $activeColor }) => theme[$activeColor] || theme.notes};
   z-index: 999;
   position: fixed;
   display: flex;
@@ -26,6 +26,7 @@ const StyledWrapper = styled.div`
   width: 680px;
   background-color: white;
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+  /* Zmienione na $isVisible z dolarem */
   transform: translate(${({ $isVisible }) => ($isVisible ? '0' : '100%')});
   transition: transform 0.25s ease-in-out;
 `;
@@ -49,8 +50,17 @@ const StyledInput = styled(Input)`
   width: 300px;
 `;
 
-const NewItemBar = ({ pageContext, isVisible, handleClose }) => {
+// Usuwamy pageContext z argumentów, bo wyciągniemy go z hooka
+const NewItemBar = ({ isVisible, handleClose }) => {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+
+  // USTALAMY KONTEKST NA PODSTAWIE URL (tak samo jak w DetailsPage)
+  const pageContext = pathname.includes('twitters')
+    ? 'twitters'
+    : pathname.includes('articles')
+      ? 'articles'
+      : 'notes';
 
   return (
     <StyledWrapper $isVisible={isVisible} $activeColor={pageContext}>
@@ -63,9 +73,10 @@ const NewItemBar = ({ pageContext, isVisible, handleClose }) => {
           twitterName: '',
         }}
         onSubmit={(values, { resetForm }) => {
+          // TUTAJ NAPRAWIAMY DATĘ!
           const newItem = {
-            // created: new Date().toLocaleDateString(),
             ...values,
+            created: new Date().toLocaleDateString(), // To pole teraz zawsze będzie istnieć
           };
 
           if (pageContext === 'notes') dispatch(addNote(newItem));
@@ -85,10 +96,11 @@ const NewItemBar = ({ pageContext, isVisible, handleClose }) => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.title}
+              required
             />
             {pageContext === 'twitters' && (
               <StyledInput
-                placeholder="X Account Name (e.g. reactjs)"
+                placeholder="X Account Name"
                 name="twitterName"
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -112,6 +124,7 @@ const NewItemBar = ({ pageContext, isVisible, handleClose }) => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.content}
+              required
             />
             <Button type="submit" $activeColor={pageContext}>
               Add {pageContext === 'notes' ? 'Note' : pageContext.slice(0, -1)}
@@ -124,10 +137,13 @@ const NewItemBar = ({ pageContext, isVisible, handleClose }) => {
 };
 
 NewItemBar.propTypes = {
-  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
   isVisible: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
 };
 
-const NewItem = WithContext(NewItemBar);
-export default NewItem;
+NewItemBar.defaultProps = {
+  isVisible: false,
+};
+
+
+export default NewItemBar;
