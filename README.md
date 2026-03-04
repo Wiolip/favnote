@@ -5,14 +5,12 @@ A professional, high-performance note-taking application built with **React 18**
 ## 📂 Project Structure
 
 src/
-├── assets/ # Icons and images
-├── components/ # UI Components (Atomic Design)
-├── hooks/ # Custom React hooks
-├── routes/ # Route definitions
-├── store/ # Redux state, reducers & actions
-├── theme/ # Global styles and ThemeProvider
-├── views/ # Page components
-└── template/ # Layout templates
+├── assets/ # Icons, fonts, and images
+├── components/ # Atomic UI components (Styled-components)
+├── routes/ # Centralized route definitions
+├── store/ # Redux logic: reducers, actions & thunks
+├── theme/ # Global styles and mainTheme (CSS-in-JS)
+├── views
 
 ## ✨ Key Features
 
@@ -40,19 +38,8 @@ This project utilizes a sophisticated styling system to ensure modularity and sc
 - **Backend & DB**: Node.js/Express, **MongoDB Atlas**.
 - **Build Tool**: Vite (Lightning-fast HMR).
 
-## 📂 Project Structure
-
-```text
-src/
-  ├── assets/          # Icons, fonts, and images
-  ├── components/      # Atomic UI components (Styled-components)
-  ├── routes/          # Centralized route definitions
-  ├── store/           # Redux logic: reducers, actions & thunks
-  ├── theme/           # Global styles and mainTheme (CSS-in-JS)
-  ├── views
-
-
 ## 🚀 Getting Started
+
 Clone the repo
 
 Bash
@@ -67,4 +54,7 @@ Bash
 npm run dev
 Run Backend (Optional)
 Make sure your local API is running on http://localhost:9000.
+
+```
+
 ```
