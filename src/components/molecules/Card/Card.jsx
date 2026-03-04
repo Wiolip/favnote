@@ -60,10 +60,21 @@ const DateInfo = styled(Paragraph)`
   margin: 0 0 5px;
   font-weight: ${({ theme }) => theme.bold};
   font-size: ${({ theme }) => theme.fontSize.xs};
+
 `;
 
 const StyledHeading = styled(Heading)`
   margin: 5px 0 0;
+`;
+
+const StyledParagraph = styled.p`
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+
 `;
 
 const StyledAvatarWrapper = styled.div`
@@ -74,7 +85,7 @@ const StyledAvatarWrapper = styled.div`
   overflow: hidden;
   position: absolute;
   right: 25px;
-  top: 25px;
+  top: 35px;
 `;
 
 const StyledAvatar = styled.img`
@@ -187,7 +198,7 @@ const Card = ({
 
       <InnerWrapper flex>
         <ContentWrapper>
-          <Paragraph>{content}</Paragraph>
+          <StyledParagraph>{content}</StyledParagraph>
           <StyledLink as={Link} to={`/${pageContext}/details/${_id}`}>
             read more
           </StyledLink>

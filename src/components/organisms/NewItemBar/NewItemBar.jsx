@@ -16,7 +16,7 @@ import { addArticleAction as addArticle } from '@/reducer/articlesReducer';
 
 const StyledWrapper = styled.div`
   border-left: 10px solid ${({ theme, $activeColor }) => theme[$activeColor]};
-  z-index: 99;
+  z-index: 999;
   position: fixed;
   display: flex;
   padding: 100px 90px;
@@ -106,7 +106,7 @@ const NewItemBar = ({ pageContext, isVisible, handleClose }) => {
                 onBlur={handleBlur}
                 value={values.articleUrl}
                 type="url"
-                
+
               />
             )}
             <StyledTextArea
