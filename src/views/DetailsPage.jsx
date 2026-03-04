@@ -33,7 +33,7 @@ const DetailsPage = () => {
     if (items.length === 0) {
       if (pageContext === 'notes') dispatch(fetchNotes());
       if (pageContext === 'articles') dispatch(fetchArticles());
-      if (pageContext === 'twitters') dispatch(dispatch(fetchTwitters()));
+      if (pageContext === 'twitters') dispatch(fetchTwitters());
     }
   }, [dispatch, items.length, pageContext]);
 
@@ -51,7 +51,7 @@ const DetailsPage = () => {
 
   return (
     <DetailsTemplate
-      _id={activeItem._id}
+      _id={activeItem._id || activeItem.id}
       pageType={pageContext}
       title={activeItem.title}
       created={activeItem.created}

@@ -1,3 +1,11 @@
-node_modules
-build
-dist
+# Ignoruj cały folder backendu
+_backend/
+
+# Ignoruj pliki środowiskowe i logi
+.env
+*.log
+
+# Standardowe wykluczenia
+node_modules/
+build/
+dist/

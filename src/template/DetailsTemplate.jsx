@@ -78,7 +78,9 @@ const DetailsTemplate = ({
   content,
   articleUrl,
   twitterName,
+ 
 }) => {
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

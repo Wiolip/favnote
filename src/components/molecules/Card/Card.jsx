@@ -118,6 +118,7 @@ const StyledLink = styled(Link)`
 
 const Card = ({
   _id,
+  id,
   pageContext,
   title,
   created,
@@ -125,22 +126,25 @@ const Card = ({
   twitterName,
   articleUrl,
 }) => {
- const [redirect, setRedirect] = useState(false);
- const dispatch = useDispatch();
 
- const handleCardClick = () => setRedirect(true);
+  const [redirect, setRedirect] = useState(false);
+  const dispatch = useDispatch();
+
+  const itemId = _id || id;
+
+  const handleCardClick = () => setRedirect(true);
 
 
-const handleRemove = (e) => {
-  e.stopPropagation();
-  console.log('Kliknięto REMOVE w karcie. ID:', _id);
 
-  if (pageContext === 'notes') dispatch(removeNoteAction(_id));
-  if (pageContext === 'twitters') dispatch(removeTwitterAction(_id));
-  if (pageContext === 'articles') dispatch(removeArticleAction(_id));
-};
+  const handleRemove = (e) => {
+    e.stopPropagation();
 
- if (redirect) return <Navigate to={`/${pageContext}/details/${_id}`} />;
+    if (pageContext === 'notes') dispatch(removeNoteAction(itemId));
+    if (pageContext === 'twitters') dispatch(removeTwitterAction(itemId));
+    if (pageContext === 'articles') dispatch(removeArticleAction(itemId));
+  };
+
+  if (redirect) return <Navigate to={`/${pageContext}/details/${_id || id}`} />;
 
   return (
     <StyledWrapper onClick={handleCardClick}>
