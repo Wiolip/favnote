@@ -51,6 +51,7 @@ src/
 
 Clone the repository
 
+```
 Bash
 git clone [https://github.com/your-username/flash-notes.git](https://github.com/your-username/flash-notes.git)
 Install dependencies
@@ -64,6 +65,7 @@ Run the development server
 
 Bash
 npm run dev
+```
 
 ## 📝 Recent Milestones
 
