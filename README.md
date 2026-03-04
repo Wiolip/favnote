@@ -1,6 +1,6 @@
 Markdown
 
-# 🚀 FlashNotes – Modern MERN Dashboard
+# 🚀 FavNotes – Modern MERN Dashboard
 
 A professional, high-performance note-taking application built with **React 18**, **Redux**, and **Styled-components**. The project follows **Atomic Design** principles and is fully integrated with a **MongoDB** database.
 
@@ -53,7 +53,7 @@ Clone the repository
 
 ```
 Bash
-git clone [https://github.com/your-username/flash-notes.git](https://github.com/your-username/flash-notes.git)
+git clone [https://github.com/wiolip/favnotes.git](https://github.com/wiolip/favnotes.git)
 Install dependencies
 
 Bash
