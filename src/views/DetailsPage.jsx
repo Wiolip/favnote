@@ -3,11 +3,11 @@ import { useParams, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import DetailsTemplate from '@/template/DetailsTemplate';
 import UserPageTemplate from '@/template/UserPageTemplate';
-import Heading from '@/components/atoms/Heading/Heading';
+import Heading from '@/components/ui/Heading/Heading';
 
-import { fetchNotes } from '@/reducer/notesReducer';
-import { fetchArticles } from '@/reducer/articlesReducer';
-import { fetchTwitters } from '@/reducer/twittersReducer';
+import { fetchNotes } from '@/store/notesReducer';
+import { fetchArticles } from '@/store/articlesReducer';
+import { fetchTwitters } from '@/store/twittersReducer';
 
 const DetailsPage = () => {
   const { id } = useParams();
@@ -59,6 +59,6 @@ const DetailsPage = () => {
       twitterName={activeItem.twitterName}
     />
   );
-};;;
+};
 
 export default DetailsPage;

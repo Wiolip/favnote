@@ -4,14 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import UserPageTemplate from '@/template/UserPageTemplate';
-import Heading from '@/components/atoms/Heading/Heading';
-import Paragraph from '@/components/atoms/Paragraph/Paragraph';
-import Button from '@/components/atoms/Button/Button';
+import Heading from '@/components/ui/Heading/Heading';
+import Paragraph from '@/components/ui/Paragraph/Paragraph';
+import Button from '@/components/ui/Button/Button';
 
-
-import { removeNoteAction } from '@/reducer/notesReducer';
-import { removeTwitterAction } from '@/reducer/twittersReducer';
-import { removeArticleAction } from '@/reducer/articlesReducer';
+import { removeNoteAction } from '@/store/notesReducer';
+import { removeTwitterAction } from '@/store/twittersReducer';
+import { removeArticleAction } from '@/store/articlesReducer';
 
 const StyledWrapper = styled.div`
   padding: 25px 150px 25px 70px;
@@ -69,7 +68,6 @@ const StyledLinkButton = styled(Button)`
   margin-bottom: 10px;
 `;
 
-
 const DetailsTemplate = ({
   _id,
   pageType,
@@ -78,10 +76,7 @@ const DetailsTemplate = ({
   content,
   articleUrl,
   twitterName,
- 
 }) => {
-
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -98,43 +93,55 @@ const DetailsTemplate = ({
   };
 
   return (
-      <UserPageTemplate pageType={pageType}>
-    <StyledWrapper>
-      <StyledPageHeader>
-        <StyledHeading $big as="h1">
-          {title}
-        </StyledHeading>
-        <StyledParagraph>CREATED - {created} ago</StyledParagraph>
-      </StyledPageHeader>
-      <Paragraph>{content}</Paragraph>
+    <UserPageTemplate pageType={pageType}>
+      <StyledWrapper>
+        <StyledPageHeader>
+          <StyledHeading $big as="h1">
+            {title}
+          </StyledHeading>
+          <StyledParagraph>CREATED - {created} ago</StyledParagraph>
+        </StyledPageHeader>
+        <Paragraph>{content}</Paragraph>
 
-      {pageType === 'articles' && (
-        <StyledLink href={articleUrl} target="_blank" rel="noopener noreferrer">
-          Open this article
-        </StyledLink>
-      )}
+        {pageType === 'articles' && (
+          <StyledLink
+            href={articleUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open this article
+          </StyledLink>
+        )}
 
-      {pageType === 'twitters' && (
-        <StyledLink href={`https://x.com/${twitterName}`} target="_blank">
-          OPEN THIS X (TWITTER)
-        </StyledLink>
-      )}
+        {pageType === 'twitters' && (
+          <StyledLink href={`https://x.com/${twitterName}`} target="_blank">
+            OPEN THIS X (TWITTER)
+          </StyledLink>
+        )}
 
-      {pageType === 'twitters' && (
-        <StyledImage alt={title} src={`https://unavatar.io/x/${twitterName}`} />
-      )}
+        {pageType === 'twitters' && (
+          <StyledImage
+            alt={title}
+            src={`https://unavatar.io/x/${twitterName}`}
+          />
+        )}
 
-      <ButtonWrapper>
-        <StyledLinkButton as={Link} to={`/${pageType}`} $activeColor={pageType}>
-          SAVE / CLOSE
-        </StyledLinkButton>
+        <ButtonWrapper>
+          <StyledLinkButton
+            as={Link}
+            to={`/${pageType}`}
+            $activeColor={pageType}
+          >
+            SAVE / CLOSE
+          </StyledLinkButton>
 
-        <Button $subtle onClick={handleRemove}>REMOVE ITEM</Button>
-      </ButtonWrapper>
-    </StyledWrapper>
-  </UserPageTemplate>
-  )
-
+          <Button $subtle onClick={handleRemove}>
+            REMOVE ITEM
+          </Button>
+        </ButtonWrapper>
+      </StyledWrapper>
+    </UserPageTemplate>
+  );
 };
 
 DetailsTemplate.propTypes = {

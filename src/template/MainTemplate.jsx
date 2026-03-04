@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled, { ThemeProvider } from 'styled-components';
 import { theme } from '@/theme/mainTheme';
 import GlobalStyle from '@/theme/GlobalStyle';
-import Sidebar from '@/components/organisms/Sidebar/Sidebar';
+import Sidebar from '@/components/layout/Sidebar/Sidebar';
 import { routes } from '@/routes/routes';
 
 const StyledMain = styled.main`

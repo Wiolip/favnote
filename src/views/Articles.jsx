@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import GridTemplate from '@/template/GridTemplate';
-import Card from '@/components/molecules/Card/Card';
-import { fetchArticles } from '@/reducer/articlesReducer';
-
+import Card from '@/components/common/Card/Card';
+import { fetchArticles } from '@/store/articlesReducer';
 
 const Articles = () => {
   // Wyciągamy tablicę items i opcjonalnie status dla UX

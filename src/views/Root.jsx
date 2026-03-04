@@ -2,17 +2,16 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { routes } from '@/routes/routes';
 import { Provider } from 'react-redux';
-import store from '@/store/store';
+import store from '@/store/index';
 
 import MainTemplate from '@/template/MainTemplate';
 import DetailsPage from './DetailsPage';
 import Notes from '@/views/Notes';
 import Articles from '@/views/Articles';
 import Twitters from '@/views/Twitters';
-import Button from '@/components/atoms/Button/Button';
+import Button from '@/components/ui/Button/Button';
 import RegisterPage from '@/views/RegisterPage';
 import LoginPage from './LoginPage';
-
 
 const Root = () => (
   <Provider store={store}>

@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux'; 
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import ButtonIcon from '@/components/atoms/ButtonIcon/ButtonIcon';
-import { logoutAction } from '@/reducer/authReducer';
+import ButtonIcon from '@/components/ui/ButtonIcon/ButtonIcon';
+import { logoutAction } from '@/store/authReducer';
 
 import bulbIcon from '@/assets/icons/bulb.svg';
 import logoutIcon from '../../../assets/icons/logout.svg?url';

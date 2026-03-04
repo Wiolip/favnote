@@ -1,32 +1,41 @@
-import React, { useEffect } from 'react'; // Dodajemy useEffect
-import { useSelector, useDispatch } from 'react-redux'; // Dodajemy useDispatch
-import { fetchNotes } from '@/reducer/notesReducer'; // Importujemy akcję
-
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import GridTemplate from '@/template/GridTemplate';
-import Card from '@/components/molecules/Card/Card';
-
+import Card from '@/components/common/Card/Card';
+import { fetchNotes } from '@/store/notesReducer'; // Upewnij się, że ścieżka jest poprawna
 
 const Notes = () => {
-  const notes = useSelector((state) => state.notes);
+  // 1. Zmieniamy wyciąganie danych - musimy wejść w .items
+  const { items: notes, status } = useSelector((state) => state.notes);
   const dispatch = useDispatch();
 
-  // Pobieramy dane przy zamontowaniu komponentu
+  // 2. Pobieramy notatki przy montowaniu komponentu
   useEffect(() => {
     dispatch(fetchNotes());
   }, [dispatch]);
 
   return (
     <GridTemplate pageType="notes">
-      {notes.map(({ title, content, created, _id, id }) => (
-        <Card
-          _id={_id || id}
-          cardType="notes"
-          title={title}
-          content={content}
-          created={created}
-          key={_id || id}
-        />
-      ))}
+      {/* Opcjonalny wskaźnik ładowania */}
+      {status === 'loading' && <p>Wczytywanie notatek...</p>}
+
+      {/* 3. Mapujemy po notes (czyli po state.notes.items) */}
+      {notes &&
+        notes.map(({ title, content, created, _id, id }) => (
+          <Card
+            id={_id || id}
+            key={_id || id}
+            cardType="notes"
+            title={title}
+            content={content}
+            created={created}
+          />
+        ))}
+
+      {/* Informacja, gdy nie ma żadnych notatek */}
+      {status === 'succeeded' && notes.length === 0 && (
+        <p>Brak notatek. Dodaj pierwszą!</p>
+      )}
     </GridTemplate>
   );
 };

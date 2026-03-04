@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import notesReducer from '@/reducer/notesReducer';
-import articlesReducer from '@/reducer/articlesReducer';
-import twittersReducer from '@/reducer/twittersReducer';
-import authReducer from '@/reducer/authReducer';
+import notesReducer from '@/store/notesReducer';
+import articlesReducer from '@/store/articlesReducer';
+import twittersReducer from '@/store/twittersReducer';
+import authReducer from '@/store/authReducer';
 
 const store = configureStore({
   reducer: {

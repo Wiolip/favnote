@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import PageContext from '@/context/PageContext';
 import UserPageTemplate from './UserPageTemplate';
-import Input from '@/components/atoms/Input/Input';
-import Heading from '@/components/atoms/Heading/Heading';
-import Paragraph from '@/components/atoms/Paragraph/Paragraph';
-import ButtonIcon from '@/components/atoms/ButtonIcon/ButtonIcon';
-import NewItemBar from '@/components/organisms/NewItemBar/NewItemBar'; // Dodany import
+import Input from '@/components/ui/Input/Input';
+import Heading from '@/components/ui/Heading/Heading';
+import Paragraph from '@/components/ui/Paragraph/Paragraph';
+import ButtonIcon from '@/components/ui/ButtonIcon/ButtonIcon';
+import NewItemBar from '@/components/layout/NewItemBar/NewItemBar'; // Dodany import
 import plusIcon from '@/assets/icons/plus.svg?url';
 
 const StyledWrapper = styled.div`
@@ -59,7 +59,6 @@ const StyledButtonIcon = styled(ButtonIcon)`
 `;
 
 const GridTemplate = ({ children, pageType }) => {
-
   const [isNewItemBarVisible, setIsNewItemBarVisible] = useState(false);
 
   const toggleNewItemBar = () => {

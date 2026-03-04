@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import { Link } from 'react-router-dom';
 import AuthTemplate from '@/template/AuthTemplate';
-import Heading from '@/components/atoms/Heading/Heading';
-import Input from '@/components/atoms/Input/Input';
-import Button from '@/components/atoms/Button/Button';
+import Heading from '@/components/ui/Heading/Heading';
+import Input from '@/components/ui/Input/Input';
+import Button from '@/components/ui/Button/Button';
 import { routes } from '@/routes/routes';
 import axios from 'axios';
 

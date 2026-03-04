@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Sidebar from '@/components/organisms/Sidebar/Sidebar';
+import Sidebar from '@/components/layout/Sidebar/Sidebar';
 
 const UserPageTemplate = ({ children, pageType }) => (
   <>

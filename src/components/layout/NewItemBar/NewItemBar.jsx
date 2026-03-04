@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Input from '@/components/atoms/Input/Input';
-import Button from '@/components/atoms/Button/Button';
-import WithContext from '@/hoc/withContext';
-import Heading from '@/components/atoms/Heading/Heading';
+import Input from '@/components/ui/Input/Input';
+import Button from '@/components/ui/Button/Button';
+import WithContext from '@/hook/withContext';
+import Heading from '@/components/ui/Heading/Heading';
 import { useDispatch } from 'react-redux';
 import { Formik, Form } from 'formik';
 
-
 // Importujemy konkretne akcje asynchroniczne z Twoich plików
-import { addNoteAction as addNote } from '@/reducer/notesReducer';
-import { addTwitterAction as addTwitter } from '@/reducer/twittersReducer';
-import { addArticleAction as addArticle } from '@/reducer/articlesReducer';
+import { addNoteAction as addNote } from '@/store/notesReducer';
+import { addTwitterAction as addTwitter } from '@/store/twittersReducer';
+import { addArticleAction as addArticle } from '@/store/articlesReducer';
 
 const StyledWrapper = styled.div`
   border-left: 10px solid ${({ theme, $activeColor }) => theme[$activeColor]};
@@ -42,15 +41,13 @@ const StyledTextArea = styled(Input)`
   height: 30vh;
   resize: none;
   padding: 20px 30px;
-  font-size: ${({ theme }) =>
-    theme.fontSize.s};
+  font-size: ${({ theme }) => theme.fontSize.s};
 `;
 
 const StyledInput = styled(Input)`
   margin-top: 30px;
   width: 300px;
 `;
-
 
 const NewItemBar = ({ pageContext, isVisible, handleClose }) => {
   const dispatch = useDispatch();
@@ -106,7 +103,6 @@ const NewItemBar = ({ pageContext, isVisible, handleClose }) => {
                 onBlur={handleBlur}
                 value={values.articleUrl}
                 type="url"
-
               />
             )}
             <StyledTextArea

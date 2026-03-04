@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Heading from '@/components/atoms/Heading/Heading';
+import Heading from '@/components/ui/Heading/Heading';
 import logoImg from '@/assets/icons/logo.svg?url';
 
 const StyledWrapper = styled.div`
@@ -29,7 +29,7 @@ const StyledHeading = styled(Heading)`
 const StyledAuthCard = styled.div`
   width: 400px;
   min-height: 400px;
-  padding: 40px;     
+  padding: 40px;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.2);
@@ -43,9 +43,7 @@ const AuthTemplate = ({ children }) => (
   <StyledWrapper>
     <StyledLogo src={logoImg} alt="FavNote logo" />
     <StyledHeading>Your new favorite online notes experience</StyledHeading>
-    <StyledAuthCard>
-      {children}
-    </StyledAuthCard>
+    <StyledAuthCard>{children}</StyledAuthCard>
   </StyledWrapper>
 );
 
