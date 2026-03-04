@@ -7,5 +7,6 @@ export const routes = {
   articles: '/articles',
   article: '/articles/details/:id',
   login: '/login',
+  register: '/register',
   newItem: '/:pageType/new',
 };

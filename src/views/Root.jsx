@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { routes } from '@/routes';
+import { routes } from '@/routes/routes';
 import { Provider } from 'react-redux';
 import store from '@/store/store';
 
@@ -10,6 +10,8 @@ import Notes from '@/views/Notes';
 import Articles from '@/views/Articles';
 import Twitters from '@/views/Twitters';
 import Button from '@/components/atoms/Button/Button';
+import RegisterPage from '@/views/RegisterPage';
+import LoginPage from './LoginPage';
 
 
 const Root = () => (
@@ -22,6 +24,11 @@ const Root = () => (
             element={<Navigate to={routes.notes} replace />}
           />
 
+          {/* Strony autoryzacji */}
+          <Route path={routes.login} element={<LoginPage />} />
+          <Route path={routes.register} element={<RegisterPage />} />
+
+          {/* Pozostałe widoki */}
           <Route path={routes.notes} element={<Notes />} />
           <Route path={routes.note} element={<DetailsPage />} />
 
