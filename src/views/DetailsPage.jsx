@@ -1,34 +1,40 @@
-// DetailsPage.jsx
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom'; // Dodany useLocation
 import { useSelector } from 'react-redux';
 import DetailsTemplate from '@/template/DetailsTemplate';
-import WithContext from '@/hoc/WithContext';
+import UserPageTemplate from '@/template/UserPageTemplate';
+import Heading from '@/components/atoms/Heading/Heading';
 
-const DetailsPage = ({ pageContext }) => {
+const DetailsPage = () => {
   const { id } = useParams();
+  const { pathname } = useLocation();
 
-  // Pobieramy dane z Reduxa z obsługą błędów (optional chaining)
+  // Sprawdzamy adres URL: jeśli zawiera "twitters", context to "twitters" itd.
+  const pageContext = pathname.includes('twitters')
+    ? 'twitters'
+    : pathname.includes('articles')
+      ? 'articles'
+      : 'notes';
+
   const activeItem = useSelector((state) => {
-    // Sprawdzamy co mamy w stanie dla danego kontekstu
-    const items = state[pageContext] ? state[pageContext][pageContext] : [];
 
-    // Szukamy elementu, upewniając się, że porównujemy stringi (id z URL to zawsze string)
+    const items = state[pageContext]?.[pageContext] || state[pageContext] || [];
     return items.find((item) => String(item.id) === String(id));
   });
 
-  // Zabezpieczenie przed błędem, jeśli itemu jeszcze nie ma
   if (!activeItem) {
     return (
       <UserPageTemplate pageType={pageContext}>
-        <Heading>Loading or item not found...</Heading>
+        <Heading>
+          Item not found (ID: {id}) in {pageContext}
+        </Heading>
       </UserPageTemplate>
     );
   }
 
   return (
     <DetailsTemplate
-      id={activeItem.id} // Przekazujemy ID do usuwania!
+      id={activeItem.id}
       pageType={pageContext}
       title={activeItem.title}
       created={activeItem.created}
@@ -38,6 +44,5 @@ const DetailsPage = ({ pageContext }) => {
     />
   );
 };
-const Detailed = WithContext(DetailsPage);
 
-export default Detailed;
+export default DetailsPage;
