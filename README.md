@@ -43,7 +43,12 @@ src/
   ├── theme/           # Global styles and mainTheme (CSS-in-JS)
   ├── views/           # Full page views (Notes, Articles, Twitters)
   └── template/        # Layout wrappers (MainTemplate, AuthTemplate)
-🚀 Getting Started
+
+
+```
+
+## 🚀 Getting Started
+
 Clone the repository
 
 Bash
@@ -59,7 +64,9 @@ Run the development server
 
 Bash
 npm run dev
-📝 Recent Milestones
+
+## 📝 Recent Milestones
+
 ✅ Refactored from Class Components/Context to Modern Redux Hooks (useSelector, useDispatch).
 
 ✅ Implemented CSS-in-JS dynamic coloring system.
@@ -71,4 +78,3 @@ npm run dev
 ⏳ Next Step: Real-time Search functionality.
 
 Created with ❤️ by a Modern React Developer.
-```
