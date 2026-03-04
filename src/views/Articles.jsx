@@ -1,32 +1,37 @@
-import React, { useEffect } from 'react'; // 1. Dodajemy useEffect
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import GridTemplate from '@/template/GridTemplate';
 import Card from '@/components/molecules/Card/Card';
-import { fetchArticles } from '@/reducer/articlesReducer'; // 2. Importujemy nową akcję async
+import { fetchArticles } from '@/reducer/articlesReducer';
+
 
 const Articles = () => {
-  const articles = useSelector((state) => state.articles);
+  // Wyciągamy tablicę items i opcjonalnie status dla UX
+  const { items: articles, status } = useSelector((state) => state.articles);
   const dispatch = useDispatch();
 
-  // 3. Gdy komponent się montuje, prosimy backend o dane
   useEffect(() => {
     dispatch(fetchArticles());
   }, [dispatch]);
 
   return (
     <GridTemplate pageType="articles">
-      {articles.map(({ title, content, articleUrl, created, _id, id }) => (
-        <Card
-          // MongoDB używa _id, więc warto to uwzględnić
-          id={_id || id}
-          cardType="articles"
-          title={title}
-          content={content}
-          articleUrl={articleUrl}
-          created={created}
-          key={_id || id}
-        />
-      ))}
+      {/* Opcjonalnie: Loading Spinner */}
+      {status === 'loading' && <p>Loading...</p>}
+
+      {/* Sprawdzamy czy articles istnieje i czy jest tablicą przed mapowaniem */}
+      {articles &&
+        articles.map(({ title, content, articleUrl, created, _id, id }) => (
+          <Card
+            id={_id || id}
+            cardType="articles"
+            title={title}
+            content={content}
+            articleUrl={articleUrl}
+            created={created}
+            key={_id || id}
+          />
+        ))}
     </GridTemplate>
   );
 };

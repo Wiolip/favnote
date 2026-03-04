@@ -1,7 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const initialState = [];
+const initialState = {
+    items: [],
+    status: 'idle', // 'loading' | 'succeeded' | 'failed'
+    error: null
+};
+
 const BASE_URL = 'http://localhost:9000/api/articles';
 
 // 1. Pobieranie - dodajemy params, żeby widzieć tylko swoje artykuły
@@ -20,7 +25,7 @@ export const addArticleAction = createAsyncThunk(
 
         const response = await axios.post(BASE_URL, {
             ...itemContent,
-            userID, // <--- To naprawia błąd 400!
+            userID,
         });
         return response.data;
     }
@@ -38,14 +43,29 @@ const articlesSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+            // POBIERANIE
+            .addCase(fetchArticles.pending, (state) => {
+                state.status = 'loading';
+            })
             .addCase(fetchArticles.fulfilled, (state, action) => {
-                return action.payload;
+                state.status = 'succeeded';
+                state.items = action.payload; // Teraz poprawnie przypisujemy do items
             })
+            .addCase(fetchArticles.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            })
+
+            // DODAWANIE
             .addCase(addArticleAction.fulfilled, (state, action) => {
-                state.push(action.payload);
+                state.items.push(action.payload); // pushujemy do state.items, a nie do state!
             })
+
+            // USUWANIE
             .addCase(removeArticleAction.fulfilled, (state, action) => {
-                return state.filter((item) => (item._id || item.id) !== action.payload);
+                state.items = state.items.filter(
+                    (item) => (item._id || item.id) !== action.payload
+                );
             });
     },
 });
