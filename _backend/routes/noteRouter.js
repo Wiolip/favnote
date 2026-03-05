@@ -15,11 +15,16 @@ router.get('/', async (req, res) => {
 // Dodawanie artykułu
 router.post('/', async (req, res) => {
     try {
-        const newItem = new Item({
+        const itemData = {
             ...req.body,
-            type: 'notes',
-            userID: req.body.userID || "TWOJE_ID_Z_MONGO_ATLAS" 
-        });
+            type: 'notes'
+        };
+
+        if (!itemData.userID || itemData.userID === "TWOJE_ID_Z_MONGO_ATLAS") {
+            delete itemData.userID;
+        }
+
+        const newItem = new Item(itemData);
         const savedItem = await newItem.save();
         res.status(201).json(savedItem);
     } catch (err) {
