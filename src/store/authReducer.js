@@ -26,6 +26,22 @@ export const authenticateAction = createAsyncThunk(
     }
 );
 
+
+export const registerAction = createAsyncThunk(
+    'auth/register',
+    async ({ username, password }, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(`${BASE_URL}/user/register`, {
+                username,
+                password,
+            });
+            return response.data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
 const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -51,7 +67,16 @@ const authSlice = createSlice({
                 state.isLoading = false;
                 state.userID = null;
                 localStorage.removeItem('userID');
-            });
+            })
+            .addCase(registerAction.fulfilled, (state, action) => {
+                state.isLoading = false;
+                
+                const id = action.payload._id || action.payload.userID || action.payload.id;
+                if (id) {
+                    state.userID = id;
+                    localStorage.setItem('userID', id);
+                }
+            })
     },
 });
 

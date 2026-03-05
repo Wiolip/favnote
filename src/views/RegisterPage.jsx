@@ -7,8 +7,8 @@ import AuthTemplate from '@/template/AuthTemplate';
 import Heading from '@/components/ui/Heading/Heading';
 import Button from '@/components/ui/Button/Button';
 import Input from '@/components/ui/Input/Input';
-import  authenticate from '@/store/authActions';
 import styled from 'styled-components';
+import { registerAction } from '@/store/authReducer';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -43,20 +43,22 @@ const RegisterPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const handleRegister = (values) => {
+    dispatch(registerAction(values))
+      .unwrap()
+      .then(() => {
+        alert('Account created! Now log in.');
+        navigate(routes.login);
+      })
+      .catch(() => alert('Registration failed. Try again.'));
+  };
+
 
   return (
     <AuthTemplate>
       <Formik
         initialValues={{ username: '', password: '' }}
-        onSubmit={({ username, password }) => {
-
-          dispatch(authenticate(username, password, 'register'))
-            .then(() => {
-              navigate(routes.login);
-              alert('Account created! Now log in.');
-            })
-            .catch(() => alert('Registration failed. Try again.'));
-        }}
+        onSubmit={(values) => handleRegister(values)}
       >
         {({ handleChange, handleBlur, values }) => (
           <>
@@ -81,7 +83,7 @@ const RegisterPage = () => {
                 register
               </Button>
             </StyledForm>
-            <StyledLink to={routes.login} > go to login page</StyledLink>
+            <StyledLink to={routes.login}> go to login page</StyledLink>
           </>
         )}
       </Formik>
