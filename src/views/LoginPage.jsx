@@ -40,10 +40,10 @@ const LoginPage = () => {
     try {
       await dispatch(authenticateAction({ username, password })).unwrap();
       console.log('Zalogowano pomyślnie!');
-    } catch (err) {
-      console.error('Błąd logowania:', err);
-      alert('Błędny login lub hasło!');
-    }
+    }  catch (err) {
+    console.error('Login error:', err);
+    alert('Invalid username or password. Please try again.');
+  }
   };
 
 
