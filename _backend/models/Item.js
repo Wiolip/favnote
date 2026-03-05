@@ -4,7 +4,7 @@ const ItemSchema = new mongoose.Schema({
     userID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true, // Notatka musi mieć właściciela
+        required: false, 
     },
 
     type: {

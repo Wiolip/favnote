@@ -17,7 +17,8 @@ router.post('/', async (req, res) => {
     try {
         const newItem = new Item({
             ...req.body,
-            type: 'notes'
+            type: 'notes',
+            userID: req.body.userID || "TWOJE_ID_Z_MONGO_ATLAS" 
         });
         const savedItem = await newItem.save();
         res.status(201).json(savedItem);
