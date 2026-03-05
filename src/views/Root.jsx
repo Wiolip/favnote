@@ -30,7 +30,11 @@ const Root = () => (
         <Routes>
           <Route
             path={routes.home}
-            element={<Navigate to={routes.notes} replace />}
+            element={
+              <ProtectedRoute>
+                <Navigate to={routes.notes} replace />
+              </ProtectedRoute>
+            }
           />
 
           {/* Strony autoryzacji */}
@@ -47,11 +51,7 @@ const Root = () => (
           <Route path={routes.twitters} element={<Twitters />} />
           <Route path={routes.twitter} element={<DetailsPage />} />
 
-          <Route
-            path="/:pageType/new"
-            element={<div></div>}
-          />
-
+          <Route path="/:pageType/new" element={<div></div>} />
         </Routes>
       </MainTemplate>
     </BrowserRouter>
