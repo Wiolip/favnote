@@ -1,8 +1,8 @@
-import React,  { useSelector} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import { Link, Navigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import AuthTemplate from '@/template/AuthTemplate';
 import Heading from '@/components/ui/Heading/Heading';
 import Input from '@/components/ui/Input/Input';
