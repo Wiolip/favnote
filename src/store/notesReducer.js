@@ -11,9 +11,10 @@ const initialState = {
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000';
 const BASE_URL = `${API_URL}/api/notes`;
 
-export const fetchNotes = createAsyncThunk('notes/fetchNotes', async (_, { getState }) => {
-  const { userID } = getState().auth;
-  const response = await axios.get(BASE_URL, { params: { userID } });
+export const fetchNotes = createAsyncThunk('notes/fetchNotes', async () => {
+  const response = await axios.get(BASE_URL);
+  console.log('--- LOG Z REDUCERA ---');
+  console.log('Dane odebrane z serwera:', response.data);
   return response.data;
 });
 
