@@ -10,7 +10,7 @@ const ItemSchema = new mongoose.Schema({
     type: {
         type: String,
         enum: ['notes', 'twitters', 'articles'],
-        required: true,
+        required: false,
     },
 
     title: { type: String, required: true },
