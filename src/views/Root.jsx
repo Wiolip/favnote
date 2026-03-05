@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useSelector } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { routes } from '@/routes/routes';
 import { Provider } from 'react-redux';
@@ -12,6 +12,16 @@ import Twitters from '@/views/Twitters';
 import Button from '@/components/ui/Button/Button';
 import RegisterPage from '@/views/RegisterPage';
 import LoginPage from './LoginPage';
+
+const ProtectedRoute = ({ children }) => {
+  const userID = useSelector((state) => state.auth.userID);
+
+  if (!userID) {
+    return <Navigate to={routes.login} replace />;
+  }
+
+  return children;
+};
 
 const Root = () => (
   <Provider store={store}>
@@ -39,7 +49,7 @@ const Root = () => (
 
           <Route
             path="/:pageType/new"
-            element={<div>Tu będzie formularz dodawania</div>}
+            element={<div></div>}
           />
 
         </Routes>
