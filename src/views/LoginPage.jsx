@@ -1,8 +1,8 @@
-import React from 'react';
+import React,  { useSelector} from 'react';
 import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import { Link, Navigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import AuthTemplate from '@/template/AuthTemplate';
 import Heading from '@/components/ui/Heading/Heading';
 import Input from '@/components/ui/Input/Input';
@@ -34,23 +34,28 @@ const StyledLink = styled(Link)`
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-
-  // Wyciągamy userID ze stanu za pomocą useSelector
   const userID = useSelector((state) => state.auth.userID);
 
-  if (userID) {
-    return <Navigate to={routes.home} />;
-  }
+  const handleLogin = async (username, password) => {
+    try {
+      await dispatch(authenticateAction({ username, password })).unwrap();
+      console.log('Zalogowano pomyślnie!');
+    } catch (err) {
+      console.error('Błąd logowania:', err);
+      alert('Błędny login lub hasło!');
+    }
+  };
 
+
+  if (userID) {
+    return <Navigate to={routes.notes} />;
+  }
   return (
     <AuthTemplate>
       <Formik
         initialValues={{ username: '', password: '' }}
-        onSubmit={({ username, password }) => {
-          // Wysyłamy obiekt, bo tak zdefiniowaliśmy authenticateAction w thunku
-          dispatch(authenticateAction({ username, password }));
-        }}
-      >
+        onSubmit={({ username, password }) => handleLogin(username, password)}>
+
         {({ handleChange, handleBlur, values }) => (
           <>
             <Heading>Sign in</Heading>
