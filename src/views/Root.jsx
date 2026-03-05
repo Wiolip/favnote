@@ -45,11 +45,57 @@ const Root = () => (
           <Route path={routes.notes} element={<Notes />} />
           <Route path={routes.note} element={<DetailsPage />} />
 
-          <Route path={routes.articles} element={<Articles />} />
-          <Route path={routes.article} element={<DetailsPage />} />
+          
+          <Route
+            path={routes.notes}
+            element={
+              <ProtectedRoute>
+                <Notes />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={routes.articles}
+            element={
+              <ProtectedRoute>
+                <Articles />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={routes.twitters}
+            element={
+              <ProtectedRoute>
+                <Twitters />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path={routes.twitters} element={<Twitters />} />
-          <Route path={routes.twitter} element={<DetailsPage />} />
+
+          <Route
+            path={routes.note}
+            element={
+              <ProtectedRoute>
+                <DetailsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={routes.article}
+            element={
+              <ProtectedRoute>
+                <DetailsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={routes.twitter}
+            element={
+              <ProtectedRoute>
+                <DetailsPage />
+              </ProtectedRoute>
+            }
+          />
 
           <Route path="/:pageType/new" element={<div></div>} />
         </Routes>
