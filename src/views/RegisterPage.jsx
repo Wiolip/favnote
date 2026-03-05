@@ -51,9 +51,14 @@ const RegisterPage = () => {
         navigate(routes.login);
       })
       .catch((err) => {
-      const errorMessage = err?.error || 'Registration failed. Try again.';
-      alert(errorMessage);
-    });
+        if (err?.error === 'Username already exists') {
+          alert('This user already exists! Please log in.');
+          navigate(routes.login);
+        } else {
+
+          alert('Registration failed. Please try again.');
+        }
+      });
   };
 
 
