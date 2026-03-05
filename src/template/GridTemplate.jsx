@@ -58,7 +58,7 @@ const GridTemplate = ({
       <Sidebar />
       <StyledPageHeader>
         <Input
-          search
+          $search
           placeholder="Search"
           value={searchValue}
           onChange={onSearchChange}

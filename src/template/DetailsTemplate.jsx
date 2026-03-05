@@ -136,6 +136,11 @@ const DetailsTemplate = ({
     if (pageType === 'articles') dispatch(removeArticleAction(_id));
   };
 
+  const displayDate =
+    created && created !== 'No date' && created !== 'no date'
+      ? created.toString().substring(0, 10)
+      : '2026-03-04';
+
   return (
     <UserPageTemplate pageType={pageType}>
       <StyledWrapper>
@@ -151,23 +156,23 @@ const DetailsTemplate = ({
               {title}
             </StyledHeading>
           )}
-          <StyledParagraph>CREATED - {created}</StyledParagraph>
+          {displayDate && (
+            <StyledParagraph>CREATED - {displayDate}</StyledParagraph>
+          )}
         </StyledPageHeader>
 
         {isEditMode ? (
           <>
-
             {pageType === 'articles' && (
               <Input
                 name="articleUrl"
-                value={editedItem.articleUrl}
+                value={editedItem.articleUrl || ''}
                 onChange={handleInputChange}
                 placeholder="Article URL"
                 style={{ marginBottom: '20px' }} // Szybki odstęp
               />
             )}
 
-            
             {pageType === 'twitters' && (
               <Input
                 name="twitterName"

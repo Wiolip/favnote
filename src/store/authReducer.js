@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:9000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000';
+const BASE_URL = `${API_URL}/api`;
 
 // 1. Definiujemy stan początkowy, który od razu sprawdza pamięć przeglądarki
 const initialState = {

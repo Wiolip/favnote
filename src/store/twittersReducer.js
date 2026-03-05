@@ -8,7 +8,8 @@ const initialState = {
     error: null,
 };
 
-const BASE_URL = 'http://localhost:9000/api/twitters';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000';
+const BASE_URL = `${API_URL}/api/twitters`;
 
 // 1. Pobieranie - przefiltrowane przez userID
 export const fetchTwitters = createAsyncThunk('twitters/fetchTwitters', async (_, { getState }) => {
@@ -40,7 +41,7 @@ export const removeTwitterAction = createAsyncThunk('twitters/removeTwitter', as
 export const updateTwitterAction = createAsyncThunk(
     'twitters/update',
     async ({ _id, title, content, twitterName }) => {
-        const response = await axios.put(`http://localhost:9000/api/post/twitters/${_id}`, {
+        const response = await axios.put(`${BASE_URL}/${_id}`, {
             title,
             content,
             twitterName,

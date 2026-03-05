@@ -12,12 +12,15 @@ const ItemSchema = new mongoose.Schema({
         enum: ['notes', 'twitters', 'articles'],
         required: true,
     },
-    
+
     title: { type: String, required: true },
     content: { type: String, required: true },
     articleUrl: { type: String },
     twitterName: { type: String },
-    created: { type: String },
+    created: {
+        type: Date,
+        default: Date.now
+    },
 });
 
 module.exports = mongoose.model('Item', ItemSchema);

@@ -8,7 +8,8 @@ const initialState = {
   error: null,
 };
 
-const BASE_URL = 'http://localhost:9000/api/notes';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000';
+const BASE_URL = `${API_URL}/api/notes`;
 
 export const fetchNotes = createAsyncThunk('notes/fetchNotes', async (_, { getState }) => {
   const { userID } = getState().auth;
@@ -36,11 +37,11 @@ export const removeNoteAction = createAsyncThunk('notes/removeNote', async (id) 
 export const updateNoteAction = createAsyncThunk(
   'notes/update',
   async ({ _id, title, content }) => {
-    const response = await axios.put(`http://localhost:9000/api/post/notes/${_id}`, {
+    const response = await axios.put(`${BASE_URL}/${_id}`, {
       title,
       content,
     });
-    return response.data; // To co zwróci backend po aktualizacji
+    return response.data;
   }
 );
 
@@ -72,7 +73,7 @@ const notesSlice = createSlice({
       .addCase(updateNoteAction.fulfilled, (state, action) => {
         const index = state.items.findIndex((item) => item._id === action.payload._id);
         if (index !== -1) {
-          
+
           state.items[index] = action.payload;
         }
       });

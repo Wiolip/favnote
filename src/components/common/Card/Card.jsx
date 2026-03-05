@@ -26,18 +26,17 @@ const StyledWrapper = styled.div`
 
 const InnerWrapper = styled.div`
   position: relative;
-  padding: 17px 30px;
-  /* Używamy $activeColor z dolarem i sprawdzamy theme */
+  padding: 20px 30px;
   background-color: ${({ $activeColor, theme }) =>
     theme[$activeColor] || 'white'};
 
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 110px;
+  min-height: 120px;
 
-  ${({ flex }) =>
-    flex &&
+  ${({ $flex }) =>
+    $flex &&
     css`
       display: flex;
       flex-direction: column;
@@ -52,7 +51,7 @@ const DateInfo = styled(Paragraph)`
 `;
 
 const StyledHeading = styled(Heading)`
-  margin: 5px 0 0;
+  margin: 5px 0 5px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -130,7 +129,7 @@ const Card = ({
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
-  // Samodzielne rozpoznawanie typu strony
+
   const getPageType = () => {
     if (pathname.includes('notes')) return 'notes';
     if (pathname.includes('twitters')) return 'twitters';
@@ -152,11 +151,16 @@ const Card = ({
 
   if (redirect) return <Navigate to={`/${pageType}/details/${itemId}`} />;
 
+  const displayDate =
+    created && created !== 'No date' && created !== 'no date' && created !== ''
+      ? created.toString().substring(0, 10)
+      : '2026-03-04';
+
   return (
     <StyledWrapper onClick={handleCardClick}>
       <InnerWrapper $activeColor={pageType}>
         <StyledHeading>{title}</StyledHeading>
-        <DateInfo>{created}</DateInfo>
+        <DateInfo>Created {displayDate}</DateInfo>
 
         {pageType === 'twitters' && (
           <StyledAvatarWrapper>
@@ -179,7 +183,7 @@ const Card = ({
         )}
       </InnerWrapper>
 
-      <InnerWrapper flex>
+      <InnerWrapper $flex>
         <div>
           <StyledParagraph>{content}</StyledParagraph>
           {pageType === 'twitters' && (

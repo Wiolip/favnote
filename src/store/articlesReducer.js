@@ -7,7 +7,8 @@ const initialState = {
     error: null
 };
 
-const BASE_URL = 'http://localhost:9000/api/articles';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000';
+const BASE_URL = `${API_URL}/api/articles`;
 
 // 1. Pobieranie - dodajemy params, żeby widzieć tylko swoje artykuły
 export const fetchArticles = createAsyncThunk('articles/fetchArticles', async (_, { getState }) => {
@@ -41,7 +42,7 @@ export const removeArticleAction = createAsyncThunk('articles/removeArticle', as
 export const updateArticleAction = createAsyncThunk(
     'articles/update',
     async ({ _id, title, content, articleUrl }) => {
-        const response = await axios.put(`http://localhost:9000/api/post/articles/${_id}`, {
+        const response = await axios.put(`${BASE_URL}/${_id}`, {
             title,
             content,
             articleUrl,
