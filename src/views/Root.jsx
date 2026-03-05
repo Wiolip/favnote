@@ -1,5 +1,6 @@
-import React, { useSelector } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { routes } from '@/routes/routes';
 import { Provider } from 'react-redux';
 import store from '@/store/index';
@@ -45,7 +46,6 @@ const Root = () => (
           <Route path={routes.notes} element={<Notes />} />
           <Route path={routes.note} element={<DetailsPage />} />
 
-          
           <Route
             path={routes.notes}
             element={
@@ -70,7 +70,6 @@ const Root = () => (
               </ProtectedRoute>
             }
           />
-
 
           <Route
             path={routes.note}
