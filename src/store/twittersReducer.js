@@ -36,6 +36,20 @@ export const removeTwitterAction = createAsyncThunk('twitters/removeTwitter', as
     return id;
 });
 
+// 4. Edytowanie
+export const updateTwitterAction = createAsyncThunk(
+    'twitters/update',
+    async ({ _id, title, content, twitterName }) => {
+        const response = await axios.put(`http://localhost:9000/api/post/twitters/${_id}`, {
+            title,
+            content,
+            twitterName,
+        });
+        return response.data;
+    }
+);
+
+
 const twittersSlice = createSlice({
     name: 'twitters',
     initialState,
@@ -59,6 +73,13 @@ const twittersSlice = createSlice({
                 state.items = state.items.filter(
                     (item) => (item._id || item.id) !== action.payload
                 );
+            })
+            //EDYCJA
+            .addCase(updateTwitterAction.fulfilled, (state, action) => {
+                const index = state.items.findIndex((item) => item._id === action.payload._id);
+                if (index !== -1) {
+                    state.items[index] = action.payload;
+                }
             });
     },
 });

@@ -37,6 +37,19 @@ export const removeArticleAction = createAsyncThunk('articles/removeArticle', as
     return id;
 });
 
+// 4. Edycja
+export const updateArticleAction = createAsyncThunk(
+    'articles/update',
+    async ({ _id, title, content, articleUrl }) => {
+        const response = await axios.put(`http://localhost:9000/api/post/articles/${_id}`, {
+            title,
+            content,
+            articleUrl,
+        });
+        return response.data;
+    }
+);
+
 const articlesSlice = createSlice({
     name: 'articles',
     initialState,
@@ -66,6 +79,13 @@ const articlesSlice = createSlice({
                 state.items = state.items.filter(
                     (item) => (item._id || item.id) !== action.payload
                 );
+            })
+            //EDYCJA
+            .addCase(updateArticleAction.fulfilled, (state, action) => {
+                const index = state.items.findIndex((item) => item._id === action.payload._id);
+                if (index !== -1) {
+                    state.items[index] = action.payload;
+                }
             });
     },
 });

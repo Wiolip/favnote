@@ -33,6 +33,17 @@ export const removeNoteAction = createAsyncThunk('notes/removeNote', async (id) 
   return id;
 });
 
+export const updateNoteAction = createAsyncThunk(
+  'notes/update',
+  async ({ _id, title, content }) => {
+    const response = await axios.put(`http://localhost:9000/api/post/notes/${_id}`, {
+      title,
+      content,
+    });
+    return response.data; // To co zwróci backend po aktualizacji
+  }
+);
+
 const notesSlice = createSlice({
   name: 'notes',
   initialState,
@@ -56,8 +67,18 @@ const notesSlice = createSlice({
         state.items = state.items.filter(
           (item) => (item._id || item.id) !== action.payload
         );
+      })
+      //EDYTUJ
+      .addCase(updateNoteAction.fulfilled, (state, action) => {
+        const index = state.items.findIndex((item) => item._id === action.payload._id);
+        if (index !== -1) {
+          
+          state.items[index] = action.payload;
+        }
       });
   },
 });
+
+
 
 export default notesSlice.reducer;
