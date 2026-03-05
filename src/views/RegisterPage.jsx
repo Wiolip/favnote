@@ -50,7 +50,10 @@ const RegisterPage = () => {
         alert('Account created! Now log in.');
         navigate(routes.login);
       })
-      .catch(() => alert('Registration failed. Try again.'));
+      .catch((err) => {
+      const errorMessage = err?.error || 'Registration failed. Try again.';
+      alert(errorMessage);
+    });
   };
 
 
