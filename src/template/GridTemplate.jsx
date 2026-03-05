@@ -31,10 +31,14 @@ const StyledParagraph = styled(Paragraph)`
   font-weight: ${({ theme }) => theme.bold};
 `;
 
-const GridTemplate = ({ children }) => {
-  const { pathname } = useLocation(); // 2. Pobieramy aktualną ścieżkę
+const GridTemplate = ({
+  children,
+  searchValue,
+  onSearchChange,
+  itemsCount,
+}) => {
+  const { pathname } = useLocation();
 
-  // 3. Logika rozpoznawania typu strony (identyczna jak w Sidebarze)
   const getPageType = () => {
     if (pathname.includes('notes')) return 'notes';
     if (pathname.includes('twitters')) return 'twitters';
@@ -43,16 +47,28 @@ const GridTemplate = ({ children }) => {
   };
 
   const pageType = getPageType();
+  const displayNames = {
+    notes: 'notes',
+    twitters: 'x-posts',
+    articles: 'articles',
+  };
 
   return (
     <StyledWrapper>
       <Sidebar />
       <StyledPageHeader>
-        <Input search placeholder="Search" />
+        <Input
+          search
+          placeholder="Search"
+          value={searchValue}
+          onChange={onSearchChange}
+        />
         <StyledHeading as="h1" $big>
-          {pageType}
+          {displayNames[pageType]}
         </StyledHeading>
-        <StyledParagraph>6 {pageType}</StyledParagraph>
+        <StyledParagraph>
+          {itemsCount} {displayNames[pageType]}
+        </StyledParagraph>
       </StyledPageHeader>
       <StyledGrid>{children}</StyledGrid>
     </StyledWrapper>

@@ -55,16 +55,22 @@ const NewItemBar = ({ isVisible, handleClose }) => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
-  // USTALAMY KONTEKST NA PODSTAWIE URL (tak samo jak w DetailsPage)
+
   const pageContext = pathname.includes('twitters')
     ? 'twitters'
     : pathname.includes('articles')
       ? 'articles'
       : 'notes';
 
+      const displayNames = {
+        notes: 'note',
+        twitters: 'x-post',
+        articles: 'article',
+      };
+
   return (
     <StyledWrapper $isVisible={isVisible} $activeColor={pageContext}>
-      <Heading $big>Create new {pageContext}</Heading>
+      <Heading $big>Create new {displayNames[pageContext]}</Heading>
       <Formik
         initialValues={{
           title: '',
@@ -73,10 +79,9 @@ const NewItemBar = ({ isVisible, handleClose }) => {
           twitterName: '',
         }}
         onSubmit={(values, { resetForm }) => {
-          // TUTAJ NAPRAWIAMY DATĘ!
           const newItem = {
             ...values,
-            created: new Date().toLocaleDateString(), // To pole teraz zawsze będzie istnieć
+            created: new Date().toLocaleDateString(),
           };
 
           if (pageContext === 'notes') dispatch(addNote(newItem));
@@ -127,7 +132,7 @@ const NewItemBar = ({ isVisible, handleClose }) => {
               required
             />
             <Button type="submit" $activeColor={pageContext}>
-              Add {pageContext === 'notes' ? 'Note' : pageContext.slice(0, -1)}
+              Add {displayNames[pageContext]}
             </Button>
           </StyledForm>
         )}

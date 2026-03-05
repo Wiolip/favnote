@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import GridTemplate from '@/template/GridTemplate';
 import Card from '@/components/common/Card/Card';
-import { fetchNotes } from '@/store/notesReducer'; // Upewnij się, że ścieżka jest poprawna
+import { fetchNotes } from '@/store/notesReducer';
 
 const Notes = () => {
-  // 1. Zmieniamy wyciąganie danych - musimy wejść w .items
+  const [search, setSearch] = useState('');
+  console.log('Aktualna fraza:', search);
   const { items: notes, status } = useSelector((state) => state.notes);
   const dispatch = useDispatch();
 
@@ -14,14 +15,23 @@ const Notes = () => {
     dispatch(fetchNotes());
   }, [dispatch]);
 
+  // FUNKCJA FILTRUJĄCA
+  const filteredNotes = notes.filter((item) =>
+    item.title.toLowerCase().includes(search.toLowerCase()),
+  );
+
   return (
-    <GridTemplate pageType="notes">
-      {/* Opcjonalny wskaźnik ładowania */}
-      {status === 'loading' && <p>Wczytywanie notatek...</p>}
+    <GridTemplate
+      pageType="notes"
+      searchValue={search}
+      onSearchChange={(e) => setSearch(e.target.value)}
+      itemsCount={filteredNotes.length}
+    >
+      {status === 'loading' && <p>Loading...</p>}
 
       {/* 3. Mapujemy po notes (czyli po state.notes.items) */}
-      {notes &&
-        notes.map(({ title, content, created, _id, id }) => (
+      {filteredNotes &&
+        filteredNotes.map(({ title, content, created, _id, id }) => (
           <Card
             id={_id || id}
             key={_id || id}
@@ -33,11 +43,11 @@ const Notes = () => {
         ))}
 
       {/* Informacja, gdy nie ma żadnych notatek */}
-      {status === 'succeeded' && notes.length === 0 && (
-        <p>Brak notatek. Dodaj pierwszą!</p>
+      {status === 'succeeded' && filteredNotes.length === 0 && (
+        <p>No notes found.</p>
       )}
     </GridTemplate>
   );
-};
+};;
 
 export default Notes;
