@@ -5,8 +5,7 @@ const Item = require('../models/Item');
 // Pobieranie artykułów
 router.get('/', async (req, res) => {
     try {
-        const items = await Item.find({});
-        console.log("Co znalazłem w bazie:", items);
+        const items = await Item.find({ type: 'notes' });
         res.json(items);
     } catch (err) {
         res.status(500).json({ message: err.message });

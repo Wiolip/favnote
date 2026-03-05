@@ -13,8 +13,6 @@ const BASE_URL = `${API_URL}/api/notes`;
 
 export const fetchNotes = createAsyncThunk('notes/fetchNotes', async () => {
   const response = await axios.get(BASE_URL);
-  console.log('--- LOG Z REDUCERA ---');
-  console.log('Dane odebrane z serwera:', response.data);
   return response.data;
 });
 
