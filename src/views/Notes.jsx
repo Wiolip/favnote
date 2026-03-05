@@ -6,7 +6,6 @@ import { fetchNotes } from '@/store/notesReducer';
 
 const Notes = () => {
   const [search, setSearch] = useState('');
-  console.log('Aktualna fraza:', search);
   const { items: notes, status } = useSelector((state) => state.notes);
   const dispatch = useDispatch();
 
