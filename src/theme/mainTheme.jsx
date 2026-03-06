@@ -19,4 +19,10 @@ export const theme = {
   notes: 'hsl(49, 100%, 58%)',
   articles: 'hsl(106, 47%, 64%)',
   twitters: 'hsl(202, 11%, 60%)',
+
+  mq: {
+    tablet: '@media (max-width: 768px)',
+    desktop: '@media (max-width: 1024px)',
+    bigDesktop: '@media (max-width: 1280px)',
+  },
 };

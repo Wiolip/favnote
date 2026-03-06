@@ -13,6 +13,11 @@ import { routes } from '@/routes/routes';
 const StyledMain = styled.main`
   padding-left: ${({ $isAuthPage }) => ($isAuthPage ? '0' : '150px')};
   transition: padding-left 0.3s ease-in-out;
+
+  @media (max-width: 768px) {
+    padding-left: 0;
+    padding-bottom: 80px;
+  }
 `;
 
 const StyledPlusButton = styled(ButtonIcon)`
@@ -20,11 +25,22 @@ const StyledPlusButton = styled(ButtonIcon)`
   bottom: 40px;
   right: 40px;
   z-index: 10000;
-  background-color: ${({ theme, $activeColor }) =>
-    theme[$activeColor] || theme.notes};
+  && {
+    background-color: ${({ theme, $activeColor }) =>
+      theme[$activeColor] || theme.notes};
+  }
+  
   background-size: 35%;
   border-radius: 50%;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    bottom: 80px;
+
+    right: 20px;
+    width: 55px;
+    height: 55px;
+  }
 `;
 
 const MainTemplate = ({ children }) => {

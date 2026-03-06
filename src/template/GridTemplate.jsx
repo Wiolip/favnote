@@ -9,21 +9,54 @@ import Paragraph from '@/components/ui/Paragraph/Paragraph';
 
 const StyledWrapper = styled.div`
   padding: 25px 150px 25px 200px;
+
+  @media (max-width: 1100px) {
+    padding: 25px 50px 25px 180px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 25px 20px 100px 20px;
+  }
 `;
 
 const StyledGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 85px;
+
+  @media (max-width: 1500px) {
+    grid-gap: 40px;
+  }
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+    grid-gap: 30px;
+  }
 `;
 
 const StyledPageHeader = styled.div`
   margin: 25px 0 50px 0;
+
+  @media (max-width: 768px) {
+    margin: 10px 0 30px 0;
+
+    input {
+      width: 100%;
+    }
+  }
 `;
 
 const StyledHeading = styled(Heading)`
   margin: 25px 0 0 0;
   text-transform: capitalize;
+
+  @media (max-width: 768px) {
+    font-size: 3rem;
+  }
 `;
 
 const StyledParagraph = styled(Paragraph)`

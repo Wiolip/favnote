@@ -18,7 +18,6 @@ const StyledWrapper = styled.nav`
   padding: 25px 0;
   width: 150px;
   height: 100vh;
-  /* Dynamicznie pobieramy kolor z motywu na podstawie aktywnej ścieżki */
   background-color: ${({ theme, $pageType }) =>
     theme[$pageType] || theme.notes};
   display: flex;
@@ -26,6 +25,16 @@ const StyledWrapper = styled.nav`
   justify-content: space-between;
   align-items: center;
   transition: background-color 0.3s ease;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+    height: 60px;
+    top: auto;
+    bottom: 0;
+    flex-direction: row;
+    justify-content: space-around;
+    z-index: 10;
+  }
 `;
 
 const StyledLogoLink = styled(NavLink)`
@@ -41,6 +50,11 @@ const StyledLogoLink = styled(NavLink)`
     width: 100%;
     height: auto;
   }
+
+  @media (max-width: 768px) {
+    display: none;
+
+  }
 `;
 
 const StyledLinksList = styled.ul`
@@ -50,7 +64,26 @@ const StyledLinksList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    gap: 0;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+  }
+
 `;
+
+const StyledLogoutButton = styled(ButtonIcon)`
+  margin-top: auto;
+
+  @media (max-width: 768px) {
+    margin-top: 0;
+  }
+`;
+
+
 
 const Sidebar = () => {
   const { pathname } = useLocation();
@@ -98,15 +131,14 @@ const Sidebar = () => {
             activeclass="active"
           />
         </li>
+        <ButtonIcon
+          as={NavLink}
+          to="/login"
+          icon={logoutIcon}
+          style={{ marginTop: 'auto' }}
+          onClick={() => dispatch(logoutAction())}
+        />
       </StyledLinksList>
-
-      <ButtonIcon
-        as={NavLink}
-        to="/login"
-        icon={logoutIcon}
-        style={{ marginTop: 'auto' }}
-        onClick={() => dispatch(logoutAction())}
-      />
     </StyledWrapper>
   );
 };

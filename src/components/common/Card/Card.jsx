@@ -22,6 +22,10 @@ const StyledWrapper = styled.div`
   display: grid;
   grid-template-rows: 0.25fr 1fr;
   cursor: pointer;
+
+  ${({ theme }) => theme.mq.phone} {
+    min-height: 300px;
+  }
 `;
 
 const InnerWrapper = styled.div`
@@ -42,6 +46,10 @@ const InnerWrapper = styled.div`
       flex-direction: column;
       justify-content: space-between;
     `}
+
+  ${({ theme }) => theme.mq.phone} {
+    padding: 15px;
+  }
 `;
 
 const DateInfo = styled(Paragraph)`
@@ -78,6 +86,20 @@ const StyledAvatarWrapper = styled.div`
   right: 25px;
   top: 45px;
   z-index: 2;
+
+  ${({ theme }) => theme.mq.tablet} {
+    width: 70px;
+    height: 70px;
+    top: 70px;
+    right: 15px;
+  }
+
+  ${({ theme }) => theme.mq.phone} {
+    width: 50px;
+    height: 50px;
+    top: 85px;
+    right: 15px;
+  }
 `;
 
 const StyledAvatar = styled.img`
@@ -100,6 +122,13 @@ const StyledLinkWrapper = styled.a`
   justify-content: center;
   align-items: center;
   z-index: 10;
+
+  @media (max-width: 500px) {
+    width: 50px;
+    height: 50px;
+    top: 45px;
+    right: 15px;
+  }
 `;
 
 const StyledLinkIcon = styled.img`

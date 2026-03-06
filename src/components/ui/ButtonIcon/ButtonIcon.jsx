@@ -24,6 +24,23 @@ const StyledButton = styled.button`
   img {
     width: 50%;
     height: 50%;
+
+    @media (max-width: 768px) {
+      width: 60%; 
+      height: 60%;
+    }
+  }
+
+  @media (hover: hover) {
+    &:not(.active):hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
   }
 `;
 

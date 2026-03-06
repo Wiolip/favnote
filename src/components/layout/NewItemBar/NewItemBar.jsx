@@ -26,9 +26,16 @@ const StyledWrapper = styled.div`
   width: 680px;
   background-color: white;
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-  /* Zmienione na $isVisible z dolarem */
   transform: translate(${({ $isVisible }) => ($isVisible ? '0' : '100%')});
   transition: transform 0.25s ease-in-out;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+    padding: 60px 30px;
+    border-left: none;
+    border-top: 10px solid
+      ${({ theme, $activeColor }) => theme[$activeColor] || theme.notes};
+  }
 `;
 
 const StyledForm = styled(Form)`
@@ -37,7 +44,7 @@ const StyledForm = styled(Form)`
 `;
 
 const StyledTextArea = styled(Input)`
-  margin: 30px 0 100px;
+  margin: 30px 0 30px;
   border-radius: 20px;
   height: 30vh;
   resize: none;
@@ -47,7 +54,8 @@ const StyledTextArea = styled(Input)`
 
 const StyledInput = styled(Input)`
   margin-top: 30px;
-  width: 300px;
+  width: 100%;
+  max-width: 400px;
 `;
 
 // Usuwamy pageContext z argumentów, bo wyciągniemy go z hooka

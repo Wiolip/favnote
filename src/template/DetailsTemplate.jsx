@@ -23,18 +23,28 @@ const StyledWrapper = styled.div`
   padding: 25px 150px 25px 70px;
   max-width: 50vw;
   position: relative;
-  @media (max-width: 1200px) {
+
+  ${({ theme }) => theme.mq.desktop} {
     max-width: 80vw;
+    padding: 25px 50px;
+  }
+
+  ${({ theme }) => theme.mq.tablet} {
+    max-width: 100vw;
+    padding: 25px 20px 100px;
   }
 `;
 
 const StyledPageHeader = styled.div`
   margin: 25px 0 50px 0;
+
+
 `;
 
 const StyledHeading = styled(Heading)`
   margin: 25px 0 10px 0;
   display: block;
+
 `;
 
 const StyledParagraph = styled(Paragraph)`
@@ -68,6 +78,18 @@ const StyledImage = styled.img`
   width: 120px;
   height: 120px;
   border-radius: 50%;
+
+  ${({ theme }) => theme.mq.desktop} {
+    right: 20px;
+    width: 60px;
+    height: 60px;
+  }
+
+  ${({ theme }) => theme.mq.tablet} {
+    top: 100px;
+    width: 50px;
+    height: 50px;
+  }
 `;
 
 const ButtonWrapper = styled.div`

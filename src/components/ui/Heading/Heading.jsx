@@ -8,6 +8,18 @@ const Heading = styled.h1`
   &::first-letter {
     text-transform: uppercase;
   }
+
+  ${({ theme }) => theme.mq.tablet} {
+    font-size: ${({ theme, $big }) =>
+      $big ? theme.fontSize.l : theme.fontSize.m};
+
+  }
+
+  ${({ theme }) => theme.mq.phone} {
+    font-size: ${({ theme, $big }) =>
+      $big ? theme.fontSize.m : theme.fontSize.s};
+    
+  }
 `;
 
 export default Heading;

@@ -4,6 +4,11 @@ import magnifierIcon from '../../../assets/icons/magnifier.svg?url';
 const Wrapper = styled.div`
   position: relative;
   display: inline-block;
+
+  ${({ theme }) => theme.mq.phone} {
+    display: block;
+    width: 100%;
+  }
 `;
 
 const StyledInput = styled.input`
@@ -21,6 +26,8 @@ const StyledInput = styled.input`
     color: ${({ theme }) => theme.grey300};
   }
 
+  
+
   ${({ $search }) =>
     $search &&
     `
@@ -36,6 +43,12 @@ const Icon = styled.img`
   height: 16px;
   transform: translateY(-50%);
   pointer-events: none;
+
+  ${({ theme }) => theme.mq.phone} {
+    left: 12px;
+    width: 14px;
+    height: 14px;
+  }
 `;
 
 const Input = ({ $search, ...props }) => (
