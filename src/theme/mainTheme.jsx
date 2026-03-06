@@ -13,7 +13,7 @@ export const theme = {
     xs: '1.2rem',
     s: '1.6rem',
     m: '2.1rem',
-    l: '2.2rem',
+    l: '2.3rem',
     xl: '4rem',
   },
   notes: 'hsl(49, 100%, 58%)',
@@ -21,8 +21,8 @@ export const theme = {
   twitters: 'hsl(202, 11%, 60%)',
 
   mq: {
-    tablet: '@media (max-width: 768px)',
-    desktop: '@media (max-width: 1024px)',
-    bigDesktop: '@media (max-width: 1280px)',
+    tabletLandscape: '@media (max-width: 1024px)',
+    tabletPortrait: '@media (max-width: 768px)',
+    mobile: '@media (max-width: 500px)',
   },
 };

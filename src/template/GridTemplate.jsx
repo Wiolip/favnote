@@ -8,13 +8,14 @@ import Heading from '@/components/ui/Heading/Heading';
 import Paragraph from '@/components/ui/Paragraph/Paragraph';
 
 const StyledWrapper = styled.div`
-  padding: 25px 150px 25px 200px;
+  padding: 25px 50px 25px 50px;
 
-  @media (max-width: 1100px) {
-    padding: 25px 50px 25px 180px;
+
+  ${({ theme }) => theme.mq.tabletLandscape} {
+    padding: 25px 30px 25px 30px;
   }
 
-  @media (max-width: 768px) {
+  ${({ theme }) => theme.mq.mobile} {
     padding: 25px 20px 100px 20px;
   }
 `;
@@ -22,26 +23,23 @@ const StyledWrapper = styled.div`
 const StyledGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 85px;
+  grid-gap: 45px;
 
-  @media (max-width: 1500px) {
-    grid-gap: 40px;
-  }
-
-  @media (max-width: 1100px) {
+  ${({ theme }) => theme.mq.tabletLandscape} {
     grid-template-columns: repeat(2, 1fr);
+
   }
 
-  @media (max-width: 700px) {
+  ${({ theme }) => theme.mq.mobile} {
     grid-template-columns: 1fr;
-    grid-gap: 30px;
+    
   }
 `;
 
 const StyledPageHeader = styled.div`
   margin: 25px 0 50px 0;
 
-  @media (max-width: 768px) {
+  ${({ theme }) => theme.mq.mobile} {
     margin: 10px 0 30px 0;
 
     input {
@@ -54,7 +52,7 @@ const StyledHeading = styled(Heading)`
   margin: 25px 0 0 0;
   text-transform: capitalize;
 
-  @media (max-width: 768px) {
+  ${({ theme }) => theme.mq.mobile} {
     font-size: 3rem;
   }
 `;

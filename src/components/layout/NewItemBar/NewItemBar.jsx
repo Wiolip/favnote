@@ -29,7 +29,15 @@ const StyledWrapper = styled.div`
   transform: translate(${({ $isVisible }) => ($isVisible ? '0' : '100%')});
   transition: transform 0.25s ease-in-out;
 
-  @media (max-width: 768px) {
+  ${({ theme }) => theme.mq.tablet} {
+    width: 100vw;
+    padding: 60px 30px;
+    border-left: none;
+    border-top: 10px solid
+      ${({ theme, $activeColor }) => theme[$activeColor] || theme.notes};
+  }
+  
+  ${({ theme }) => theme.mq.mobile} {
     width: 100vw;
     padding: 60px 30px;
     border-left: none;

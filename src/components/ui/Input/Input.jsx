@@ -5,8 +5,8 @@ const Wrapper = styled.div`
   position: relative;
   display: inline-block;
 
-  ${({ theme }) => theme.mq.phone} {
-    display: block;
+  ${({ theme }) => theme.mq.mobile} {
+  display: block;
     width: 100%;
   }
 `;
@@ -26,7 +26,7 @@ const StyledInput = styled.input`
     color: ${({ theme }) => theme.grey300};
   }
 
-  
+
 
   ${({ $search }) =>
     $search &&
@@ -44,7 +44,7 @@ const Icon = styled.img`
   transform: translateY(-50%);
   pointer-events: none;
 
-  ${({ theme }) => theme.mq.phone} {
+  ${({ theme }) => theme.mq.mobile} {
     left: 12px;
     width: 14px;
     height: 14px;

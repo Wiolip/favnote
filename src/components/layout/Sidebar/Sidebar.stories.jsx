@@ -1,17 +1,10 @@
 // Sidebar.stories.js
 import React from 'react';
 import Sidebar from './Sidebar';
-import { MemoryRouter } from 'react-router-dom';
 
 export default {
-  title: 'Organisms/Sidebar',
+  title: 'layout/Sidebar',
   component: Sidebar,
-  argTypes: {
-    pageType: {
-      control: { type: 'radio' },
-      options: ['note', 'twitter', 'article'],
-    },
-  },
 };
 
 const Template = (args, { initialEntries }) => (
@@ -20,17 +13,16 @@ const Template = (args, { initialEntries }) => (
   </MemoryRouter>
 );
 
-// Strona główna / notes
-export const Normal = Template.bind({});
-Normal.args = { pageType: 'note' };
-Normal.parameters = { initialEntries: ['/'] };
+export const Normal = () => <Sidebar />;
 
-// Twitter
-export const TwittersPage = Template.bind({});
-TwittersPage.args = { pageType: 'twitter' };
-TwittersPage.parameters = { initialEntries: ['/twitters'] };
+export const Twitters = () => <Sidebar />;
+Twitters.parameters = {
+  route: '/twitters',
+};
 
-// Articles
-export const ArticlesPage = Template.bind({});
-ArticlesPage.args = { pageType: 'article' };
-ArticlesPage.parameters = { initialEntries: ['/articles'] };
+
+export const Articles = () => <Sidebar />;
+Articles.parameters = {
+  route: '/articles',
+};
+

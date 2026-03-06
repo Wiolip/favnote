@@ -26,7 +26,7 @@ const StyledWrapper = styled.nav`
   align-items: center;
   transition: background-color 0.3s ease;
 
-  @media (max-width: 768px) {
+  ${({ theme }) => theme.mq.tabletPortrait} {
     width: 100vw;
     height: 60px;
     top: auto;
@@ -51,9 +51,8 @@ const StyledLogoLink = styled(NavLink)`
     height: auto;
   }
 
-  @media (max-width: 768px) {
+  ${({ theme }) => theme.mq.tabletPortrait} {
     display: none;
-
   }
 `;
 

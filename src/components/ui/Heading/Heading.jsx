@@ -9,16 +9,14 @@ const Heading = styled.h1`
     text-transform: uppercase;
   }
 
-  ${({ theme }) => theme.mq.tablet} {
+  ${({ theme }) => theme.mq.tabletLandscape} {
     font-size: ${({ theme, $big }) =>
       $big ? theme.fontSize.l : theme.fontSize.m};
-
   }
 
   ${({ theme }) => theme.mq.phone} {
     font-size: ${({ theme, $big }) =>
       $big ? theme.fontSize.m : theme.fontSize.s};
-    
   }
 `;
 

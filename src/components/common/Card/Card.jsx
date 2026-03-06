@@ -84,22 +84,16 @@ const StyledAvatarWrapper = styled.div`
   overflow: hidden;
   position: absolute;
   right: 25px;
-  top: 45px;
+  top:60px;
   z-index: 2;
 
-  ${({ theme }) => theme.mq.tablet} {
+  ${({ theme }) => theme.mq.tabletPortrait} {
     width: 70px;
     height: 70px;
-    top: 70px;
-    right: 15px;
+    top: 65px;
   }
 
-  ${({ theme }) => theme.mq.phone} {
-    width: 50px;
-    height: 50px;
-    top: 85px;
-    right: 15px;
-  }
+  
 `;
 
 const StyledAvatar = styled.img`
@@ -123,11 +117,10 @@ const StyledLinkWrapper = styled.a`
   align-items: center;
   z-index: 10;
 
-  @media (max-width: 500px) {
-    width: 50px;
-    height: 50px;
-    top: 45px;
-    right: 15px;
+  ${({ theme }) => theme.mq.phone} {
+    width: 40px;
+    height: 40px;
+    top: 85px;
   }
 `;
 

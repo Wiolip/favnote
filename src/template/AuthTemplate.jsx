@@ -4,26 +4,42 @@ import PropTypes from 'prop-types';
 import Heading from '@/components/ui/Heading/Heading';
 import logoImg from '@/assets/icons/logo.svg?url';
 
+
 const StyledWrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background-color: ${({ theme }) => theme.notes};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  ${({ theme }) => theme.mq.mobile} {
+    padding-bottom: 50px;
+  }
 `;
 
 const StyledLogo = styled.img`
   width: 200px;
   height: auto;
-  margin-bottom: 10px;
+  margin: 30px 0 20px;
+
+  ${({ theme }) => theme.mq.mobile} {
+    width: 150px;
+  }
 `;
 
 const StyledHeading = styled(Heading)`
   margin: 0 0 40px;
   text-align: center;
   font-size: ${({ theme }) => theme.fontSize.m};
+
+  ${({ theme }) => theme.mq.mobile} {
+    width: 100%;
+    max-width: 350px;
+    padding: 30px 20px;
+    min-height: auto;
+  }
 `;
 
 const StyledAuthCard = styled.div`
@@ -37,6 +53,13 @@ const StyledAuthCard = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  ${({ theme }) => theme.mq.mobile} {
+    width: 100%;
+    max-width: 350px;
+    padding: 30px  20px ;
+    min-height: auto;
+  }
 `;
 
 const AuthTemplate = ({ children }) => (

@@ -14,9 +14,8 @@ const StyledMain = styled.main`
   padding-left: ${({ $isAuthPage }) => ($isAuthPage ? '0' : '150px')};
   transition: padding-left 0.3s ease-in-out;
 
-  @media (max-width: 768px) {
+  ${({ theme }) => theme.mq.tabletPortrait} {
     padding-left: 0;
-    padding-bottom: 80px;
   }
 `;
 
@@ -29,14 +28,13 @@ const StyledPlusButton = styled(ButtonIcon)`
     background-color: ${({ theme, $activeColor }) =>
       theme[$activeColor] || theme.notes};
   }
-  
+
   background-size: 35%;
   border-radius: 50%;
   cursor: pointer;
 
-  @media (max-width: 768px) {
+  ${({ theme }) => theme.mq.tabletPortrait} {
     bottom: 80px;
-
     right: 20px;
     width: 55px;
     height: 55px;
@@ -59,10 +57,11 @@ const MainTemplate = ({ children }) => {
   const toggleBar = () => setBarVisible(!isBarVisible);
 
   return (
-    <>
-      <GlobalStyle />
+
+
       <ThemeProvider theme={theme}>
         <>
+          <GlobalStyle />
           {!isAuthPage && (
             <>
               <Sidebar pageType={pageType} />
@@ -80,7 +79,7 @@ const MainTemplate = ({ children }) => {
           <StyledMain $isAuthPage={isAuthPage}>{children}</StyledMain>
         </>
       </ThemeProvider>
-    </>
+
   );
 };
 

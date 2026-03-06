@@ -2,9 +2,11 @@ Markdown
 
 # 🚀 FavNotes – Modern MERN Dashboard
 
-A professional, high-performance note-taking application built with **React 18**, **Redux**, and **Styled-components**. The project follows **Atomic Design** principles and is fully integrated with a **MongoDB** database.
+[**🌐 View Live Demo**] [favnotes.vercel.app] (https://favnote.vercel.app)
 
-[Image of MERN stack architecture diagram]
+A professional, high-performance note-taking application built with **React 18**, **Redux**, and **Styled-components**.
+
+A professional, high-performance note-taking application built with **React 18**, **Redux**, and **Styled-components**. The project follows **Atomic Design** principles and is fully integrated with a **MongoDB** database.
 
 ## ✨ Key Features
 
@@ -19,9 +21,9 @@ A professional, high-performance note-taking application built with **React 18**
 This project utilizes a sophisticated styling system to ensure modularity and scalability:
 
 - **Styled-components**: Complete encapsulation of styles within React components.
-- **Dynamic Theming**: Global `ThemeProvider` that reacts to the current `pageType` (Yellow for Notes, Blue for Twitter, Orange for Articles).
+- **Dynamic Theming**: Global `ThemeProvider` that reacts to the current `pageType` (Yellow for Notes, Grey for X-post , Green for Articles).
 - **Props-driven UI**: Components dynamically adapt their appearance based on passed props (e.g., active states, colors).
-- **Atomic Design**: Organized structure of Atoms, Molecules, and Organisms.
+- **Atomic Design**: Organized structure of ui elements, common and layout .
 
 ## 🛠️ Tech Stack
 
@@ -35,36 +37,57 @@ This project utilizes a sophisticated styling system to ensure modularity and sc
 ## 📂 Project Structure
 
 ```text
-src/
-  ├── assets/          # Icons, fonts, and images
-  ├── components/      # Atomic UI components (Styled-components)
-  ├── routes/          # Centralized route definitions
-  ├── store/           # Redux logic: reducers, actions & thunks
-  ├── theme/           # Global styles and mainTheme (CSS-in-JS)
-  ├── views/           # Full page views (Notes, Articles, Twitters)
-  └── template/        # Layout wrappers (MainTemplate, AuthTemplate)
+
+├── _backend/           # Node.js/Express server (handles API & DB connection)
+│     └── server.js     # Entry point for the backend
+├── src/                # Frontend application (React)
+│     ├── assets/       # Static assets (icons, fonts, images)
+│     ├── components/   # Atomic UI components (Atoms, Molecules, Organisms)
+│     ├── routes/       # Route configuration & protected routes
+│     ├── store/        # Redux state: slices, actions & thunks
+│     ├── theme/        # Styled-components global styles & mainTheme
+│     ├── views/        # Main pages (Notes, Articles, Twitters)
+│     └── template/     # Layout templates for Auth and User pages
 
 
 ```
 
 ## 🚀 Getting Started
 
-Clone the repository
-
 ```
-Bash
+
+Make sure you have Node.js installed on your machine
+
+1/ Clone the repository
+
 git clone [https://github.com/wiolip/favnotes.git](https://github.com/wiolip/favnotes.git)
 Install dependencies
 
-Bash
+2/ Backend Setup (Database & API)
+
+# Navigate to the backend folder
+cd _backend
+
+# Install backend dependencies
 npm install
-Setup Environment
-Ensure your backend API (MongoDB/Express) is running on http://localhost:9000.
 
-Run the development server
+# Start the server
+node server.js
 
-Bash
+Note: The server will start on http://localhost:9000. Ensure this port is free.
+
+
+3/ Frontend Setup
+
+# Navigate to the root directory
+cd ..
+
+# Install frontend dependencies
+npm install
+
+# Run the development server
 npm run dev
+
 ```
 
 ## 📝 Recent Milestones

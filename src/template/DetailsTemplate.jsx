@@ -20,18 +20,18 @@ import {
 } from '@/store/articlesReducer';
 
 const StyledWrapper = styled.div`
-  padding: 25px 150px 25px 70px;
-  max-width: 50vw;
+  padding: 25px 50px 25px 50px;
+  max-width: 80vw;
   position: relative;
 
-  ${({ theme }) => theme.mq.desktop} {
-    max-width: 80vw;
-    padding: 25px 50px;
+  ${({ theme }) => theme.mq.tabletLandscape} {
+    max-width: 100vw;
+    padding: 25px 30px 25px 30px;
   }
 
-  ${({ theme }) => theme.mq.tablet} {
-    max-width: 100vw;
-    padding: 25px 20px 100px;
+  ${({ theme }) => theme.mq.mobile} {
+
+    padding: 25px 20px 100px 20px;
   }
 `;
 
@@ -79,16 +79,17 @@ const StyledImage = styled.img`
   height: 120px;
   border-radius: 50%;
 
-  ${({ theme }) => theme.mq.desktop} {
+  ${({ theme }) => theme.mq.tabletLandscape} {
+    right: 20px;
+    width: 80px;
+    height: 80px;
+  }
+
+  ${({ theme }) => theme.mq.mobile} {
+    top: 150px;
     right: 20px;
     width: 60px;
     height: 60px;
-  }
-
-  ${({ theme }) => theme.mq.tablet} {
-    top: 100px;
-    width: 50px;
-    height: 50px;
   }
 `;
 
